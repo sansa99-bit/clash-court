@@ -48,6 +48,7 @@ wss.on('connection', (ws) => {
       return;
     }
     let m; try { m = JSON.parse(str); } catch (e) { return; }
+    if (m.t === 'ping') { send(ws, { t: 'pong', k: m.k }); return; }
     if (m.t === 'create') {
       if (ws.room) leave(ws);
       const code = newCode(); if (!code) { send(ws, { t: 'error', msg: 'Serveur plein, réessaie.' }); return; }
