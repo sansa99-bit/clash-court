@@ -44,6 +44,7 @@ wss.on('connection', (ws) => {
     // Fast path: relay game traffic without parsing
     if (ws.room && str.charCodeAt(0) === 82 /* 'R' */) {
       const room = rooms.get(ws.room); if (!room) return;
+      if (!room.started && ws.role === 'host' && str.startsWith('R{"t":"start"')) room.started = true;
       send(ws.role === 'host' ? room.guest : room.host, str.slice(1));
       return;
     }
@@ -52,29 +53,44 @@ wss.on('connection', (ws) => {
     if (m.t === 'create') {
       if (ws.room) leave(ws);
       const code = newCode(); if (!code) { send(ws, { t: 'error', msg: 'Serveur plein, réessaie.' }); return; }
-      rooms.set(code, { host: ws, guest: null, created: Date.now() });
+      const token = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      rooms.set(code, { host: ws, guest: null, created: Date.now(), token, hostGone: 0, guestInfo: null });
       ws.room = code; ws.role = 'host';
-      send(ws, { t: 'created', code });
+      send(ws, { t: 'created', code, token });
+    } else if (m.t === 'resume') {
+      // l'hôte revient (ex. il est allé envoyer le code dans Messages et iOS a coupé la connexion)
+      const code = String(m.code || '').toUpperCase().trim();
+      const room = rooms.get(code);
+      if (!room || room.token !== m.token) { send(ws, { t: 'resumeFail' }); return; }
+      if (room.host && room.host !== ws) { room.host.room = null; try { room.host.terminate(); } catch (e) {} }
+      room.host = ws; room.hostGone = 0; ws.room = code; ws.role = 'host';
+      send(ws, { t: 'resumed', code });
+      if (room.guest) send(ws, { t: 'guest', info: room.guestInfo || {} });
     } else if (m.t === 'join') {
       const code = String(m.code || '').toUpperCase().trim();
       const room = rooms.get(code);
       if (!room) { send(ws, { t: 'error', msg: 'Aucun salon avec ce code.' }); return; }
       if (room.guest) { send(ws, { t: 'error', msg: 'Ce salon est déjà complet.' }); return; }
       if (ws.room) leave(ws);
-      room.guest = ws; ws.room = code; ws.role = 'guest';
+      room.guest = ws; room.guestInfo = m.info || {}; ws.room = code; ws.role = 'guest';
       send(ws, { t: 'joined', code });
-      send(room.host, { t: 'guest', info: m.info || {} });
+      send(room.host, { t: 'guest', info: room.guestInfo });
     } else if (m.t === 'leave') {
-      leave(ws);
+      leave(ws, true);
     }
   });
-  ws.on('close', () => leave(ws));
+  ws.on('close', () => leave(ws, false));
 });
 
-function leave(ws) {
+function leave(ws, explicit) {
   const code = ws.room; if (!code) return;
   const room = rooms.get(code); ws.room = null;
   if (!room) return;
+  if (room.host === ws && !explicit && !room.started) {
+    // coupure involontaire avant le match : on garde le salon 3 minutes pour que l'hôte revienne
+    room.host = null; room.hostGone = Date.now();
+    return;
+  }
   if (room.host === ws) {
     send(room.guest, { t: 'peerLeft' });
     if (room.guest) room.guest.room = null;
@@ -89,7 +105,10 @@ function leave(ws) {
 setInterval(() => {
   wss.clients.forEach((ws) => { if (!ws.isAlive) return ws.terminate(); ws.isAlive = false; ws.ping(); });
   const now = Date.now();
-  for (const [code, room] of rooms) if (!room.guest && now - room.created > 30 * 60 * 1000) { send(room.host, { t: 'error', msg: 'Salon expiré.' }); rooms.delete(code); }
+  for (const [code, room] of rooms) {
+    if (!room.host && room.hostGone && now - room.hostGone > 3 * 60 * 1000) { send(room.guest, { t: 'peerLeft' }); if (room.guest) room.guest.room = null; rooms.delete(code); continue; }
+    if (!room.guest && now - room.created > 30 * 60 * 1000) { send(room.host, { t: 'error', msg: 'Salon expiré.' }); rooms.delete(code); }
+  }
 }, 15000);
 
 server.listen(PORT, () => console.log(`Klash Court en ligne sur http://localhost:${PORT}`));

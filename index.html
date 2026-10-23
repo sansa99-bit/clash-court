@@ -915,13 +915,30 @@ function netConnect(onOpen){
   const to=setTimeout(()=>{if(!opened){try{ws.close()}catch(e){}lobbyErr('Le serveur ne répond pas. Vérifie ta connexion.')}},6000);
   ws.onopen=()=>{opened=true;clearTimeout(to);onOpen()};
   ws.onerror=()=>{if(!opened){clearTimeout(to);lobbyErr('Connexion au serveur impossible.')}};
-  ws.onclose=()=>{NET.ws=null;const was=NET.role;NET.role=null;if(opened&&was)peerGone('Connexion au serveur perdue.')};
+  ws.onclose=()=>{if(NET.ws!==ws)return;NET.ws=null;const was=NET.role;
+    if(opened&&was==='host'&&!NET.inMatch&&NET.token&&NET.code){NET.away=true;netResume();return}
+    NET.role=null;if(opened&&was)peerGone('Connexion au serveur perdue.')};
   ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch(_){return}netMsg(m)};
 }
-function netLeave(){if(NET.ws){try{NET.ws.send(JSON.stringify({t:'leave'}))}catch(e){}}NET.role=null;NET.code=null;NET.guest=null;NET.inMatch=false}
+function netLeave(){if(NET.ws){try{NET.ws.send(JSON.stringify({t:'leave'}))}catch(e){}}NET.role=null;NET.code=null;NET.guest=null;NET.inMatch=false;NET.token=null;NET.away=false;clearTimeout(NET.resT)}
+/* host came back after iOS cut the socket (e.g. while sending the code): silently reopen the same room */
+function netResume(n){
+  clearTimeout(NET.resT);if(!NET.away||!NET.token)return;
+  if(document.hidden){NET.resT=setTimeout(()=>netResume(n),800);return}
+  n=n||0;if(n>6){NET.away=false;NET.role=null;NET.token=null;lobbyErr('Connexion au serveur perdue. Crée un nouveau salon.');return}
+  let ws;try{ws=new WebSocket(netURL())}catch(e){NET.resT=setTimeout(()=>netResume(n+1),1500);return}
+  NET.ws=ws;let ok=false;
+  ws.onopen=()=>{ok=true;ws.send(JSON.stringify({t:'resume',code:NET.code,token:NET.token}))};
+  ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch(_){return}netMsg(m)};
+  ws.onerror=()=>{};
+  ws.onclose=()=>{if(NET.ws!==ws)return;NET.ws=null;if(NET.away||ok&&NET.role==='host'&&!NET.inMatch){NET.away=true;NET.resT=setTimeout(()=>netResume(ok?0:n+1),1200)}else if(NET.role){NET.role=null;peerGone('Connexion au serveur perdue.')}};
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&NET.away)netResume()});
 function netMsg(m){
   switch(m.t){
-    case 'created':NET.role='host';NET.code=m.code;NET.guest=null;showHostWait();break;
+    case 'created':NET.role='host';NET.code=m.code;NET.token=m.token;NET.guest=null;showHostWait();break;
+    case 'resumed':NET.away=false;NET.role='host';if(!NET.inMatch&&NET.code)showHostWait();break;
+    case 'resumeFail':NET.away=false;NET.role=null;NET.token=null;lobbyErr('Ton salon a expiré. Crée un nouveau salon.');break;
     case 'joined':NET.role='guest';NET.code=m.code;showGuestWait();break;
     case 'guest':NET.guest=m.info||{};showHostWait();sfx.green();break;
     case 'error':lobbyErr(m.msg||'Erreur.');break;
@@ -958,13 +975,17 @@ function lobbyErr(msg){showLobby(msg)}
 function showHostWait(){
   const g=NET.guest,gc=g&&CH[g.char];
   panel(`<span class="lbl">Partie privée · tu es l'hôte</span><h1>Salon ouvert</h1>
-   <div class="codebox"><span class="lbl">Code à partager</span><b id="codeTxt">${NET.code}</b><button class="go alt sm" id="pCopy">Copier</button></div>
+   <div class="codebox"><span class="lbl">Code à partager</span><b id="codeTxt">${NET.code}</b><button class="go alt sm" id="pCopy">Copier</button><button class="go sm" id="pShare">Inviter</button></div>
    ${g?`<div class="opp"><canvas data-pk="${g.char}"></canvas><div><span class="lbl">Adversaire connecté</span><b>${gc?gc.name:'Joueur'}</b><span>Prêt à jouer.</span></div></div>`:`<p class="wait">En attente d'un adversaire…</p>`}
    <p>Arène : ${selArena==='random'?'aléatoire':ARENAS[selArena].name}. Ton joueur : ${CH[pKey].name}.</p>
    <div class="btns">${g?'<button class="go" id="pGo">Lancer le match</button>':''}<button class="go alt" id="pQuit">Fermer le salon</button></div>`,
-  {pGo:onlineStart,pQuit:()=>{netLeave();showLobby()},pCopy:()=>{const t=NET.code;try{navigator.clipboard.writeText(t).then(()=>toast('Code copié'),()=>selectCode())}catch(e){selectCode()}}});
+  {pGo:onlineStart,pQuit:()=>{netLeave();showLobby()},pShare:shareRoom,pCopy:()=>{const t=NET.code;try{navigator.clipboard.writeText(t).then(()=>toast('Code copié'),()=>selectCode())}catch(e){selectCode()}}});
   paintPanelPortraits();
 }
+function roomLink(){return /^https?:$/.test(location.protocol)?location.origin+location.pathname+'?salon='+NET.code:''}
+function shareRoom(){const url=roomLink(),text='Viens jouer contre moi sur Klash Court ! Code du salon : '+NET.code;
+  if(navigator.share){navigator.share(url?{title:'Klash Court',text,url}:{title:'Klash Court',text}).catch(()=>{});return}
+  try{navigator.clipboard.writeText(url?text+'\n'+url:text).then(()=>toast('Lien copié'),()=>selectCode())}catch(e){selectCode()}}
 function selectCode(){const el=$('codeTxt');if(!el)return;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
 function showGuestWait(){
   panel(`<span class="lbl">Partie privée · salon ${NET.code}</span><h1>Connecté !</h1><p class="wait">En attente que l'hôte lance le match…</p>
@@ -4233,6 +4254,8 @@ if(window.CC_APP&&!window.CC_SERVER){const m=document.querySelector('.mcard[data
 setTimeout(()=>{try{paintArt()}catch(e){console.warn(e)}},60);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>setTimeout(()=>{for(const k in ARTC)if(k.startsWith('m_'))delete ARTC[k];try{paintArt()}catch(e){}},50));
 // boot splash
+{const q=/[?&]salon=([A-Za-z]{4})/.exec(location.search);if(q&&/^https?:$/.test(location.protocol)){const code=q[1].toUpperCase();try{history.replaceState(null,'',location.pathname)}catch(e){}
+  setTimeout(()=>{try{ensureAudio()}catch(e){}$('menu').hidden=true;showLobby();const ci=$('codeIn');if(ci){ci.value=code;$('pJoin').click()}},900)}}
 {const boot=$('boot'),done=()=>{boot.classList.add('out');setTimeout(()=>boot.remove(),600)};
  Promise.race([document.fonts?document.fonts.ready:Promise.resolve(),new Promise(r=>setTimeout(r,1400))]).then(()=>setTimeout(done,250))}
 window.__cc={R3,haptic,pauseGame,resumeGame,SND,AC:()=>AC,ensureAudio,_roar,_tone,launch,GC,startFight,renderTo,CH,NET,G,P,A,RUN,SAVE,gainXP,openPack,emote,setView,forceKO:(t)=>{F.stage='fight';const o=A;o.hp=1;startKO(P,o);if(t)F.koType=t},F:()=>F,rebSpot,missShot:(w)=>{const s=w==='A'?A:P;ball={state:'held',owner:s,x:s.x,y:s.y,z:1,vx:0,vy:0,vz:0};s.act=null;launch(s,0.1)},openShop,setArena,dribble:(k)=>dribble(P,k),heat:()=>{G.heat=99;addHeat(5)},mana:(w)=>{const a=w==='A'?A:P;a.mana=99;addMana(a,5)},ball:()=>ball,setP:k=>{pKey=k},setMode:m=>{selMode=m},end:(a,b)=>{G.sP=a;G.sA=b;endMatch()},doSuper:w=>doSuper(w==='A'?A:P),give:w=>{const o=w==='A'?A:P;ball={state:'held',owner:o,x:o.x,y:o.y,z:1,vx:0,vy:0,vz:0}}};
