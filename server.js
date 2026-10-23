@@ -1,4 +1,4 @@
-// Klash Court — serveur de parties privées
+// Klash Court — serveur en ligne : sert le jeu, relaie les matchs, gère amis connectés, invitations et file classée
 // Sert le jeu (dossier public/) et relaie les messages entre l'hôte et l'invité d'un salon.
 const http = require('http');
 const fs = require('fs');
@@ -43,6 +43,46 @@ function newCode() {
 }
 const send = (ws, msg) => { if (ws && ws.readyState === 1) ws.send(typeof msg === 'string' ? msg : JSON.stringify(msg)); };
 
+// ---- Identité (compte Supabase vérifié), amis en ligne, invitations, file classée ----
+const SB_URL = (process.env.SUPABASE_URL || '').replace(/\/$/, ''), SB_KEY = process.env.SUPABASE_ANON_KEY || '';
+const DEV_TRUST = process.env.DEV_TRUST === '1' && !SB_URL;   // tests locaux uniquement
+const users = new Map();     // uid -> ws
+const invites = new Map();   // id -> { from, to, at }
+let queue = [];              // [{ ws, info, tr, at }]
+async function verify(token) {
+  if (!SB_URL || !SB_KEY || !token) return null;
+  try {
+    const h = { apikey: SB_KEY, Authorization: 'Bearer ' + token };
+    const r = await fetch(SB_URL + '/auth/v1/user', { headers: h });
+    if (!r.ok) return null;
+    const u = await r.json(); if (!u || !u.id) return null;
+    let pseudo = (u.user_metadata && u.user_metadata.pseudo) || 'Joueur', tr = 0;
+    try {
+      const p = await fetch(SB_URL + '/rest/v1/profiles?select=pseudo,trophies&id=eq.' + encodeURIComponent(u.id), { headers: h });
+      if (p.ok) { const a = await p.json(); if (a && a[0]) { pseudo = a[0].pseudo || pseudo; tr = a[0].trophies || 0; } }
+    } catch (e) {}
+    return { uid: u.id, pseudo: String(pseudo).slice(0, 16), tr };
+  } catch (e) { return null; }
+}
+function statusOf(uid) {
+  const w = users.get(uid);
+  if (!w || w.readyState !== 1) return 'offline';
+  const room = w.room && rooms.get(w.room);
+  if (room && room.started && room.host && room.guest) return 'ingame';
+  return 'online';
+}
+function unqueue(ws) { queue = queue.filter(q => q.ws !== ws); }
+function makeRoom(host, guest, guestInfo, opts) {
+  const code = newCode(); if (!code) { send(host, { t: 'error', msg: 'Serveur plein, réessaie.' }); send(guest, { t: 'error', msg: 'Serveur plein, réessaie.' }); return; }
+  const token = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const ranked = !!(opts && opts.ranked);
+  rooms.set(code, { host, guest, created: Date.now(), token, hostGone: 0, guestInfo, ranked });
+  host.room = code; host.role = 'host'; guest.room = code; guest.role = 'guest';
+  send(host, { t: 'created', code, token, ranked: ranked ? 1 : 0, opp: guest.pseudo || '' });
+  send(guest, { t: 'joined', code, ranked: ranked ? 1 : 0, opp: host.pseudo || '' });
+  send(host, { t: 'guest', info: guestInfo });
+}
+
 wss.on('connection', (ws) => {
   ws.isAlive = true; ws.room = null; ws.role = null;
   ws.on('pong', () => { ws.isAlive = true; });
@@ -57,6 +97,58 @@ wss.on('connection', (ws) => {
     }
     let m; try { m = JSON.parse(str); } catch (e) { return; }
     if (m.t === 'ping') { send(ws, { t: 'pong', k: m.k }); return; }
+    if (m.t === 'hello') {
+      (async () => {
+        let id = await verify(m.token);
+        if (!id && DEV_TRUST && m.uid) id = { uid: String(m.uid), pseudo: String(m.pseudo || 'Joueur').slice(0, 16), tr: +m.tr || 0 };
+        if (!id) { send(ws, { t: 'helloFail' }); return; }
+        if (ws.uid && users.get(ws.uid) === ws) users.delete(ws.uid);
+        ws.uid = id.uid; ws.pseudo = id.pseudo; ws.tr = Number.isFinite(+m.tr) ? +m.tr : id.tr;
+        users.set(id.uid, ws);
+        send(ws, { t: 'hello', uid: id.uid, pseudo: id.pseudo });
+      })();
+      return;
+    }
+    if (m.t === 'tr') { ws.tr = Math.max(0, Math.min(5000, +m.tr || 0)); return; }
+    if (m.t === 'presence') {
+      const map = {};
+      (Array.isArray(m.uids) ? m.uids.slice(0, 200) : []).forEach(u => { map[u] = statusOf(String(u)); });
+      send(ws, { t: 'presence', map });
+      return;
+    }
+    if (m.t === 'invite') {
+      if (!ws.uid) { send(ws, { t: 'inviteFail', reason: 'auth' }); return; }
+      const to = users.get(String(m.to));
+      if (!to || to.readyState !== 1 || to === ws) { send(ws, { t: 'inviteFail', reason: 'offline', to: m.to }); return; }
+      if (statusOf(to.uid) === 'ingame') { send(ws, { t: 'inviteFail', reason: 'busy', to: m.to }); return; }
+      const id = Math.random().toString(36).slice(2, 10);
+      invites.set(id, { from: ws, to, at: Date.now() });
+      send(to, { t: 'invite', id, from: { uid: ws.uid, pseudo: ws.pseudo, tr: ws.tr || 0 }, char: String((m.info || {}).char || '') });
+      send(ws, { t: 'inviteSent', to: to.uid, pseudo: to.pseudo });
+      return;
+    }
+    if (m.t === 'inviteReply') {
+      const inv = invites.get(m.id); invites.delete(m.id);
+      if (!inv || inv.to !== ws) { send(ws, { t: 'error', msg: "Cette invitation n'est plus valable." }); return; }
+      const host = inv.from;
+      if (!m.ok) { send(host, { t: 'inviteDeclined', pseudo: ws.pseudo }); return; }
+      if (!host || host.readyState !== 1) { send(ws, { t: 'error', msg: "Ton ami s'est déconnecté." }); return; }
+      if (statusOf(host.uid) === 'ingame') { send(ws, { t: 'error', msg: 'Ton ami est déjà en match.' }); return; }
+      unqueue(host); unqueue(ws); leave(host, true); leave(ws, true);
+      makeRoom(host, ws, m.info || {}, { ranked: false });
+      return;
+    }
+    if (m.t === 'queue') {
+      if (!ws.uid) { send(ws, { t: 'error', msg: 'Connecte-toi à ton compte pour jouer en classé.' }); return; }
+      unqueue(ws); leave(ws, true);
+      const me = { ws, info: m.info || {}, tr: Math.max(0, +m.tr || ws.tr || 0), at: Date.now() };
+      let best = -1, bd = Infinity;
+      queue.forEach((q, i) => { if (q.ws.uid === ws.uid || q.ws.readyState !== 1) return; const d = Math.abs(q.tr - me.tr); if (d < bd) { bd = d; best = i; } });
+      if (best >= 0) { const o = queue.splice(best, 1)[0]; makeRoom(o.ws, ws, me.info, { ranked: true }); }
+      else { queue.push(me); send(ws, { t: 'queued', n: queue.length }); }
+      return;
+    }
+    if (m.t === 'unqueue') { unqueue(ws); send(ws, { t: 'unqueued' }); return; }
     if (m.t === 'create') {
       if (ws.room) leave(ws);
       const code = newCode(); if (!code) { send(ws, { t: 'error', msg: 'Serveur plein, réessaie.' }); return; }
@@ -86,7 +178,11 @@ wss.on('connection', (ws) => {
       leave(ws, true);
     }
   });
-  ws.on('close', () => leave(ws, false));
+  ws.on('close', () => {
+    leave(ws, false); unqueue(ws);
+    if (ws.uid && users.get(ws.uid) === ws) users.delete(ws.uid);
+    for (const [id, inv] of invites) if (inv.from === ws || inv.to === ws) { if (inv.to === ws) send(inv.from, { t: 'inviteDeclined', pseudo: ws.pseudo, gone: 1 }); invites.delete(id); }
+  });
 });
 
 function leave(ws, explicit) {
@@ -112,6 +208,8 @@ function leave(ws, explicit) {
 setInterval(() => {
   wss.clients.forEach((ws) => { if (!ws.isAlive) return ws.terminate(); ws.isAlive = false; ws.ping(); });
   const now = Date.now();
+  for (const [id, inv] of invites) if (now - inv.at > 60000) invites.delete(id);
+  queue = queue.filter(q => q.ws.readyState === 1);
   for (const [code, room] of rooms) {
     if (!room.host && room.hostGone && now - room.hostGone > 3 * 60 * 1000) { send(room.guest, { t: 'peerLeft' }); if (room.guest) room.guest.room = null; rooms.delete(code); continue; }
     if (!room.guest && now - room.created > 30 * 60 * 1000) { send(room.host, { t: 'error', msg: 'Salon expiré.' }); rooms.delete(code); }

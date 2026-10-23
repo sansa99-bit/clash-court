@@ -461,6 +461,51 @@ details.keys dd{margin:0}
 @keyframes bootbar{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
 *{-webkit-tap-highlight-color:transparent}body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
 input{-webkit-user-select:text;user-select:text}
+/* trophées */
+.trc{display:inline-flex;align-items:center;gap:6px;color:#ffd23f}.trc svg{width:.9em;height:.9em}
+.pchip.trchip{color:#ffd23f;border-color:rgba(255,210,63,.4);padding:5px 12px 5px 9px}.pchip.trchip svg{width:17px;height:17px}
+.rc.locked canvas{filter:grayscale(1) brightness(.45)}.rc.locked span{opacity:.6}
+.rlock{position:absolute;inset:auto 0 26px;display:flex;justify-content:center;align-items:center;gap:3px;font:800 11px var(--ui);font-style:normal;color:#ffd23f;pointer-events:none}.rlock svg{width:12px;height:12px}
+.acard.locked{filter:grayscale(.85) brightness(.6)}.alock{position:absolute;top:6px;right:8px;z-index:2;display:flex;align-items:center;gap:3px;font:800 11px var(--ui);font-style:normal;color:#ffd23f}.alock svg{width:12px;height:12px}
+.trline{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:14px;background:rgba(255,210,63,.1);border:1px solid rgba(255,210,63,.35);color:#ffd23f;font:600 14px var(--ui);margin-top:4px}
+.trline svg{width:20px;height:20px}.trline b{font:800 18px var(--ui)}.trline span{color:#e6e8ee}.trline.down{background:rgba(227,52,63,.1);border-color:rgba(227,52,63,.35);color:#ff8a92}.trline small{margin-left:auto;color:#8e96aa;font-size:12px}
+#vRoad,#vRank{overflow:hidden}.roadbox,.rankbox{height:100%;overflow:auto;padding:16px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px}
+.roadhead{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}.roadhead h2{margin:2px 0 0;font:400 28px var(--display)}.roadhead p{margin:0;flex:1 1 260px;font:500 13px/1.4 var(--ui);color:#cfd3dc}
+.roadwrap{overflow-x:auto;overflow-y:hidden;padding:4px 0 6px;flex:1 1 auto;min-height:190px}
+.road{position:relative;width:1900px;height:100%;min-height:185px;margin:0 70px}
+.rbar{position:absolute;left:0;right:0;bottom:26px;height:10px;border-radius:99px;background:rgba(255,255,255,.1)}.rbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#ffb02e,#ffd23f)}
+.rnode{position:absolute;bottom:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:150px}
+.rnode>b{font:800 13px var(--ui);color:#cfd3dc;background:#1b2030;border:2px solid rgba(255,255,255,.2);border-radius:99px;padding:3px 10px;position:relative;z-index:1}
+.rnode.got>b{background:#ffd23f;color:#2a1d00;border-color:#ffd23f}.rnode.next>b{border-color:#ffd23f;color:#ffd23f}
+.rcard{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:6px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);margin-bottom:18px;min-height:96px;align-content:center}
+.rnode.lock .rcard{opacity:.55}.rnode.next .rcard{border-color:rgba(255,210,63,.6);box-shadow:0 0 18px rgba(255,210,63,.25)}
+.rwd{display:flex;flex-direction:column;align-items:center;gap:2px;font:700 10px var(--ui);color:#e6e8ee;text-align:center;max-width:66px}
+.rwd em{font-style:normal;line-height:1.1}.rwd canvas{width:46px;height:46px;border-radius:10px;background:#1b2030}
+.rwd.ar i{display:block;width:60px;height:34px;border-radius:8px;background:#2a3047 center/cover}.rwd .pmini.big{display:block;width:22px;height:28px;border-radius:6px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 80%,#fff),var(--pc));box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.rwd.kk{flex-direction:row;color:#ffd23f;font-size:12px;max-width:none}.rwd.kk .kc{width:16px;height:16px;font-size:9px}.rwd.tt em{color:#ffd23f}
+.rnote{margin:0;font:500 12px/1.4 var(--ui);color:#8e96aa}
+#roadOv{z-index:31}.roadrw .rwds{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:6px 0}.roadrw .rwd{max-width:96px;font-size:12px}.roadrw .rwd canvas{width:80px;height:80px}.roadrw .rwd.ar i{width:96px;height:54px}
+/* classement */
+.rankhead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.rankhead h2{margin:2px 0 0;font:400 26px var(--display)}
+.live{display:inline-flex;align-items:center;gap:7px;font:700 12px var(--ui);color:#3ddc6a}.live i{width:8px;height:8px;border-radius:50%;background:#3ddc6a;animation:pulse 1.2s infinite;box-shadow:0 0 10px #3ddc6a}
+.rkme{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border-radius:14px;background:rgba(255,210,63,.1);border:1px solid rgba(255,210,63,.35);font:600 14px var(--ui);color:#e6e8ee}.rkme svg{width:20px;height:20px;color:#ffd23f}.rkme b{color:#ffd23f}
+.rklist{display:flex;flex-direction:column;gap:4px}
+.rkrow{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.05);font:600 14px var(--ui);color:#e6e8ee;transition:background .4s}
+.rkrow b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rkn{font:800 15px var(--ui);color:#8e96aa}.rkrow.me{background:rgba(255,210,63,.16);outline:1px solid rgba(255,210,63,.5)}
+.rkrow.up{animation:rkup 1.6s}.rkrow.down{animation:rkdown 1.6s}@keyframes rkup{0%{background:rgba(61,220,106,.35)}}@keyframes rkdown{0%{background:rgba(227,52,63,.35)}}
+/* salle d'attente */
+#inviteOv{z-index:33}
+.wroom{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media (max-aspect-ratio:1/1){.wroom{grid-template-columns:1fr}}
+.wcol{display:flex;flex-direction:column;gap:9px;min-width:0;padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke)}
+.wme{display:flex;align-items:center;gap:10px}.wme canvas{width:56px;height:56px;border-radius:12px;background:#1b2030}.wme b{display:block;font:700 16px var(--ui);color:#fff}.wme span{font:600 13px var(--ui);color:#cfd3dc;display:flex;gap:8px;align-items:center}
+.go.wrk{display:flex;gap:8px;align-items:center;justify-content:center;background:linear-gradient(180deg,#ffd23f,#e0a800);color:#2a1d00}.go.wrk svg{width:20px;height:20px}.go.wrk small{font:700 12px var(--ui);opacity:.75}
+.wsearch{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,210,63,.1);border:1px solid rgba(255,210,63,.35)}.wsearch b{display:block;font:700 14px var(--ui);color:#ffd23f}.wsearch small{font:600 12px var(--ui);color:#cfd3dc}.wsearch>div{flex:1}
+.spin{width:20px;height:20px;border-radius:50%;border:3px solid rgba(255,210,63,.25);border-top-color:#ffd23f;animation:spinr .8s linear infinite}@keyframes spinr{to{transform:rotate(360deg)}}
+.wcol .joinrow input{font:600 16px var(--ui);letter-spacing:.02em;text-transform:none}.wcol #codeIn{font-family:var(--display)}.wcol #codeIn{letter-spacing:.3em;text-transform:uppercase}
+.frlist{display:flex;flex-direction:column;gap:5px;max-height:240px;overflow-y:auto}
+.frow{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:12px;background:rgba(255,255,255,.05)}.frow .fn{flex:1;min-width:0}.frow .fn b{display:block;font:700 14px var(--ui);color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.frow small{font:600 11px var(--ui);color:#8e96aa;display:flex;gap:6px;align-items:center}.frow .fa{display:flex;gap:5px}.frow .go.sm{padding:6px 12px;font-size:13px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;background:#5a6070}.dot.online{background:#3ddc6a;box-shadow:0 0 8px #3ddc6a}.dot.ingame{background:#ff9f1a}.dot.pending{background:transparent;border:2px dashed #8e96aa;box-sizing:border-box}
+.rkbadge{display:flex;align-items:center;gap:8px;color:#ffd23f!important;font-weight:700!important}.rkbadge svg{width:18px;height:18px}
 /* comptes */
 #acctOv{z-index:30}
 #acctBox p{margin:0;font:500 14px/1.45 var(--ui);color:#d5d8e0}
@@ -521,6 +566,8 @@ input{-webkit-user-select:text;user-select:text}
       <nav class="rail" aria-label="Navigation">
         <button data-v="home" aria-pressed="true" aria-label="Jouer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg></button>
         <button data-v="roster" aria-pressed="false" aria-label="Joueurs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg></button>
+        <button data-v="road" aria-pressed="false" aria-label="Trophées"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A6 6 0 0 1 13 15.9V18h3.5v3h-9v-3H11v-2.1A6 6 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.4 2.5A8 8 0 0 1 6 8zm12 0v1a8 8 0 0 1-.4 2.5A3 3 0 0 0 19 8V7z"/></svg></button>
+        <button data-v="rank" aria-pressed="false" aria-label="Classement"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M9 21V9h6v12M3 21v-7h6M15 21v-5h6v5M2 21h20"/><path d="M12 3l1 2 2 .3-1.5 1.4.4 2.1L12 7.8l-1.9 1 .4-2.1L9 5.3l2-.3z" fill="currentColor" stroke="none"/></svg></button>
         <button id="openShop" aria-label="Boutique"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></button>
         <button data-v="settings" aria-pressed="false" aria-label="Réglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
         <button data-v="help" aria-pressed="false" aria-label="Commandes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10a5 5 0 0 1 4.6 7l-1 2.3a2.5 2.5 0 0 1-4.3.4L15 15H9l-1.3 1.7a2.5 2.5 0 0 1-4.3-.4l-1-2.3A5 5 0 0 1 7 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="15.5" cy="10.5" r=".6" fill="currentColor"/><circle cx="17.5" cy="12.5" r=".6" fill="currentColor"/></svg></button>
@@ -529,6 +576,7 @@ input{-webkit-user-select:text;user-select:text}
         <header class="topbar">
           <div class="logo">Klash <em>Court</em></div>
           <span class="tspace"></span>
+          <button class="pchip trchip" id="hdrTr" aria-label="Chemin des trophées"></button>
           <button class="pchip acct" id="hdrAcct" hidden aria-label="Mon compte"></button>
           <button class="pchip" id="hdrPacks" aria-label="Mes packs"></button>
           <span class="klash" id="menuK"></span>
@@ -563,6 +611,8 @@ input{-webkit-user-select:text;user-select:text}
           <div class="roster" id="roster"></div>
           <div class="pick glass" id="pickInfo"></div>
         </div>
+        <div class="mview" id="vRoad" hidden><div class="glass roadbox" id="roadView"></div></div>
+        <div class="mview" id="vRank" hidden><div class="glass rankbox" id="rankView"></div></div>
         <div class="mview" id="vSettings" hidden><div class="glass"><h2 style="margin:0 0 14px;font:400 26px var(--display)">Réglages</h2><div id="mSet"></div></div></div>
         <div class="mview" id="vHelp" hidden>
           <div class="help glass"><dl>
@@ -607,6 +657,8 @@ input{-webkit-user-select:text;user-select:text}
   <div id="toast" hidden></div>
   <section id="pauseOv" class="ov" hidden><div class="glass pcard2"><h2>Pause</h2><div class="pbtns"><button class="go big" id="pResume">Reprendre</button><button class="go alt" id="pSetBtn">Réglages</button><button class="go alt danger" id="pAbandon">Abandonner le match</button></div><div id="pSet" hidden></div></div></section>
   <section id="panel" class="ov" hidden><div class="card" id="panelCard"></div></section>
+  <section id="inviteOv" class="ov" hidden><div class="glass pcard2" id="inviteBox"></div></section>
+  <section id="roadOv" class="ov" hidden><div class="glass pcard2 roadrw" id="roadBox"></div></section>
   <section id="acctOv" class="ov" hidden><div class="glass pcard2" id="acctBox"></div></section>
 </div>
 
@@ -927,21 +979,24 @@ function netEv(e){if(NET.role==='host'&&RUN.mode==='online'&&!RENDERING&&NET.ev.
 const rnd=(k,v)=>typeof v==='number'?(isFinite(v)?Math.round(v*100)/100:null):v;
 function netURL(){if(window.CC_SERVER)return window.CC_SERVER;if(!/^https?:$/.test(location.protocol))throw new Error('no server');return (location.protocol==='https:'?'wss://':'ws://')+location.host}
 function netSend(o){if(!NET.ws||NET.ws.readyState!==1)return;const sys=o.t==='create'||o.t==='join'||o.t==='leave';NET.ws.send(sys?JSON.stringify(o):'R'+JSON.stringify(o,rnd))}
-function netConnect(onOpen){
+function netConnect(onOpen,quiet){
   if(NET.ws&&NET.ws.readyState===1){onOpen();return}
-  if(!/^https?:$/.test(location.protocol)||/claude\.ai|claudeusercontent|anthropic/.test(location.host)){lobbyErr('Le mode en ligne fonctionne sur ta version hébergée du jeu (serveur Klash Court). Ici, la page ne peut pas se connecter à Internet.');return}
+  if(NET.ws&&NET.ws.readyState===0){const w=NET.ws,prev=w.onopen;w.onopen=e=>{prev&&prev(e);onOpen()};return}
+  if(!/^https?:$/.test(location.protocol)||/claude\.ai|claudeusercontent|anthropic/.test(location.host)){if(!quiet)lobbyErr('Le mode en ligne fonctionne sur ta version hébergée du jeu (serveur Klash Court). Ici, la page ne peut pas se connecter à Internet.');return}
   let ws,opened=false;
-  try{ws=new WebSocket(netURL())}catch(e){lobbyErr('Connexion au serveur impossible.');return}
-  NET.ws=ws;
-  const to=setTimeout(()=>{if(!opened){try{ws.close()}catch(e){}lobbyErr('Le serveur ne répond pas. Vérifie ta connexion.')}},6000);
-  ws.onopen=()=>{opened=true;clearTimeout(to);onOpen()};
-  ws.onerror=()=>{if(!opened){clearTimeout(to);lobbyErr('Connexion au serveur impossible.')}};
-  ws.onclose=()=>{if(NET.ws!==ws)return;NET.ws=null;const was=NET.role;
+  try{ws=new WebSocket(netURL())}catch(e){if(!quiet)lobbyErr('Connexion au serveur impossible.');return}
+  NET.ws=ws;NET.hello=false;NET.helloSent=0;
+  const to=setTimeout(()=>{if(!opened){try{ws.close()}catch(e){}if(!quiet)lobbyErr('Le serveur ne répond pas. Vérifie ta connexion.')}},9000);
+  ws.onopen=()=>{opened=true;clearTimeout(to);NET.helloSent=1;netHello();onOpen()};
+  ws.onerror=()=>{if(!opened){clearTimeout(to);if(!quiet)lobbyErr('Connexion au serveur impossible.')}};
+  ws.onclose=()=>{if(NET.ws!==ws)return;NET.ws=null;NET.hello=false;const was=NET.role;
+    if(FR.searchAt){FR.searchAt=0;searchUI(false)}
+    if(ACC.user)setTimeout(netEnsure,4000);
     if(opened&&was==='host'&&!NET.inMatch&&NET.token&&NET.code){NET.away=true;netResume();return}
     NET.role=null;if(opened&&was)peerGone('Connexion au serveur perdue.')};
   ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch(_){return}netMsg(m)};
 }
-function netLeave(){if(NET.ws){try{NET.ws.send(JSON.stringify({t:'leave'}))}catch(e){}}NET.role=null;NET.code=null;NET.guest=null;NET.inMatch=false;NET.token=null;NET.away=false;clearTimeout(NET.resT)}
+function netLeave(){if(NET.ws){try{NET.ws.send(JSON.stringify({t:'leave'}))}catch(e){}}NET.ranked=false;NET.oppPseudo='';NET.role=null;NET.code=null;NET.guest=null;NET.inMatch=false;NET.token=null;NET.away=false;clearTimeout(NET.resT)}
 /* host came back after iOS cut the socket (e.g. while sending the code): silently reopen the same room */
 function netResume(n){
   clearTimeout(NET.resT);if(!NET.away||!NET.token)return;
@@ -957,10 +1012,19 @@ function netResume(n){
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&NET.away)netResume()});
 function netMsg(m){
   switch(m.t){
-    case 'created':NET.role='host';NET.code=m.code;NET.token=m.token;NET.guest=null;showHostWait();break;
-    case 'resumed':NET.away=false;NET.role='host';if(!NET.inMatch&&NET.code)showHostWait();break;
+    case 'created':RUN.mode='online';FR.searchAt=0;NET.role='host';NET.code=m.code;NET.token=m.token;NET.guest=null;NET.ranked=!!m.ranked;NET.oppPseudo=m.opp||'';NET.autoGo=false;$('menu').hidden=true;showHostWait();break;
+    case 'hello':NET.hello=true;NET.myUid=m.uid;askPresence();break;
+    case 'helloFail':NET.hello=false;break;
+    case 'presence':Object.assign(FR.presence,m.map||{});renderFriends();break;
+    case 'invite':showInvite(m);break;
+    case 'inviteSent':toast('Invitation envoyée à '+(m.pseudo||'ton ami'),2400);break;
+    case 'inviteFail':toast(m.reason==='busy'?'Ton ami est en plein match.':m.reason==='auth'?'Connecte-toi à ton compte.':"Ton ami n'est plus en ligne.",2600);askPresence();break;
+    case 'inviteDeclined':toast((m.pseudo||'Ton ami')+(m.gone?" s'est déconnecté.":' a refusé ton invitation.'),2600);renderFriends();break;
+    case 'queued':break;
+    case 'unqueued':FR.searchAt=0;searchUI(false);break;
+    case 'resumed':NET.away=false;NET.role='host';netHello();if(!NET.inMatch&&NET.code)showHostWait();break;
     case 'resumeFail':NET.away=false;NET.role=null;NET.token=null;lobbyErr('Ton salon a expiré. Crée un nouveau salon.');break;
-    case 'joined':NET.role='guest';NET.code=m.code;showGuestWait();break;
+    case 'joined':RUN.mode='online';FR.searchAt=0;NET.role='guest';NET.code=m.code;NET.ranked=!!m.ranked;NET.oppPseudo=m.opp||'';$('menu').hidden=true;showGuestWait();break;
     case 'guest':NET.guest=m.info||{};showHostWait();sfx.green();break;
     case 'error':lobbyErr(m.msg||'Erreur.');break;
     case 'peerLeft':if(NET.role==='host'&&!NET.inMatch){NET.guest=null;showHostWait();toast('Ton adversaire a quitté le salon.')}else peerGone('Ton adversaire a quitté la partie.');break;
@@ -974,29 +1038,133 @@ function netMsg(m){
   }
 }
 function peerGone(msg){
-  NET.inMatch=false;
+  const wasRanked=NET.ranked&&NET.inMatch&&G.mode!=='over';NET.inMatch=false;
+  if(wasRanked){RUN.last={win:true,sP:G.sP,sA:G.sA,opp:A.ch,fights:G.fights};G.mode='over';G.cut=null;NET.ranked=false;
+    RUN.earnHtml=applyTrophies(trophyDelta(true,'ranked'));
+    panel(`<span class="lbl">Partie classée</span><h1>Victoire</h1>${scoreBlock()}<p>${msg} La victoire t'est attribuée.</p><div class="btns"><button class="go" id="pLob">Salle d'attente</button><button class="go alt" id="pMenu">Menu</button></div>`,{pLob:()=>{netLeave();showLobby()},pMenu:()=>{netLeave();toMenu()}});return}
   if(G.mode==='play'||G.mode==='fight'||G.mode==='over'||!$('panel').hidden){G.mode='over';G.cut=null;
     panel(`<span class="lbl">Partie privée</span><h1>Partie terminée</h1><p>${msg}</p><div class="btns"><button class="go" id="pLob">Salon en ligne</button><button class="go alt" id="pMenu">Menu</button></div>`,{pLob:()=>{netLeave();showLobby()},pMenu:()=>{netLeave();toMenu()}})}
 }
 /* --- lobby screens --- */
-function myInfo(){return {char:pKey,eq:equipOf(pKey),lvl:lvOf(pKey).lv,pseudo:ACC.pseudo||''}}
+function myInfo(){return {char:pKey,eq:equipOf(pKey),lvl:lvOf(pKey).lv,pseudo:ACC.pseudo||'',tr:SAVE.tr|0}}
 function lobbyHead(){const c=CH[pKey];return `<span class="lbl">Partie privée</span><h1>Jouer en ligne</h1><div class="opp"><canvas data-pk="${pKey}"></canvas><div><span class="lbl">Ton joueur</span><b>${c.name}</b><span>Ultime : ${SUP[c.super].name}. Tu peux changer de joueur dans le menu.</span></div></div>`}
+/* --- salle d'attente en ligne (amis, invitations, partie classée, code privé) --- */
+const FR={list:[],presence:{},loaded:false,err:'',busy:false,pollT:0,listT:0,inv:null,invT:0,searchAt:0,searchT:0};
+const canNet=()=>/^https?:$/.test(location.protocol)&&!/claude\.ai|claudeusercontent|anthropic/.test(location.host);
+async function netHello(){
+  if(!NET.ws||NET.ws.readyState!==1||!ACC.user)return;
+  let token='';try{const {data}=await ACC.sb.auth.getSession();token=data&&data.session&&data.session.access_token||''}catch(e){}
+  try{NET.ws.send(JSON.stringify({t:'hello',token,tr:SAVE.tr|0,uid:ACC.uid,pseudo:ACC.pseudo}))}catch(e){}
+}
+function netEnsure(){if(!ACC.user||!canNet())return;if(!NET.ws||NET.ws.readyState>1)netConnect(()=>{},true)}
+function netReady(cb,tries){ // connecté ET identifié
+  tries=tries||0;netEnsure();
+  if(NET.ws&&NET.ws.readyState===1&&NET.hello)return cb();
+  if(tries>40){lobbyErr('Connexion au serveur impossible. Réessaie dans un instant.');return}
+  if(NET.ws&&NET.ws.readyState===1&&!NET.helloSent){NET.helloSent=1;netHello()}
+  setTimeout(()=>netReady(cb,tries+1),150);
+}
+function lobbyOpen(){return !$('panel').hidden&&!!$('wroom')}
+async function loadFriends(){
+  if(!ACC.user||!ACC.sb)return;
+  try{const {data,error}=await ACC.sb.rpc('my_friends');if(error)throw error;FR.list=data||[];FR.loaded=true;FR.err=''}
+  catch(e){FR.err=/my_friends|function/i.test(String(e&&e.message))?"Les amis ne sont pas encore activés sur le serveur.":'Liste d\'amis indisponible pour le moment.'}
+  askPresence();renderFriends();
+}
+function askPresence(){const ids=FR.list.filter(f=>f.status==='accepted').map(f=>f.id);if(ids.length&&NET.ws&&NET.ws.readyState===1&&NET.hello)NET.ws.send(JSON.stringify({t:'presence',uids:ids}))}
+function friendState(f){return FR.presence[f.id]||'offline'}
+function renderFriends(){
+  const el=$('frList');if(!el)return;
+  if(FR.err){el.innerHTML=`<p class="amuted">${FR.err}</p>`;return}
+  if(!FR.loaded){el.innerHTML='<p class="amuted">Chargement…</p>';return}
+  if(!FR.list.length){el.innerHTML='<p class="amuted">Ajoute un ami avec son pseudo pour l\'inviter directement.</p>';return}
+  const rk=f=>f.incoming?0:f.status!=='accepted'?4:({online:1,ingame:2,offline:3})[friendState(f)];
+  const rows=FR.list.slice().sort((a,b)=>rk(a)-rk(b)||a.pseudo.localeCompare(b.pseudo));
+  el.innerHTML=rows.map(f=>{
+    const st=f.status!=='accepted'?'pending':friendState(f);
+    const label={online:'En ligne',ingame:'En match',offline:'Hors ligne',pending:f.incoming?'Veut être ton ami':'Demande envoyée'}[st];
+    const act=f.incoming?`<button class="go sm" data-fa="${f.id}">Accepter</button><button class="go alt sm" data-fr="${f.id}">Refuser</button>`
+      :f.status!=='accepted'?`<button class="go alt sm" data-fx="${f.id}" aria-label="Annuler">✕</button>`
+      :st==='online'?`<button class="go sm" data-fi="${f.id}">Inviter</button>`:`<button class="go alt sm" data-fx="${f.id}" aria-label="Retirer">✕</button>`;
+    return `<div class="frow"><i class="dot ${st}"></i><div class="fn"><b>${escH(f.pseudo)}</b><small>${label} · ${trHtml(f.trophies||0)}</small></div><div class="fa">${act}</div></div>`}).join('');
+  el.querySelectorAll('[data-fi]').forEach(b=>b.onclick=()=>inviteFriend(b.dataset.fi,b));
+  el.querySelectorAll('[data-fa]').forEach(b=>b.onclick=()=>respondFriend(b.dataset.fa,true));
+  el.querySelectorAll('[data-fr]').forEach(b=>b.onclick=()=>respondFriend(b.dataset.fr,false));
+  el.querySelectorAll('[data-fx]').forEach(b=>b.onclick=()=>{if(b.dataset.armed!=='1'){b.dataset.armed='1';b.textContent='Retirer ?';return}removeFriend(b.dataset.fx)});
+}
+async function addFriend(){
+  const inp=$('frIn'),ps=(inp&&inp.value||'').trim();if(!ps)return;
+  try{const {data,error}=await ACC.sb.rpc('friend_request',{p_pseudo:ps});if(error)throw error;
+    const msg={sent:'Demande envoyée à '+ps,accepted:ps+' est maintenant ton ami !',not_found:'Aucun joueur avec ce pseudo.',self:"C'est ton propre pseudo.",pending:'Demande déjà envoyée.',already:'Vous êtes déjà amis.',limit:'Limite de 200 amis atteinte.',not_auth:'Connecte-toi à ton compte.'}[data]||'OK';
+    toast(msg,2600);if(data==='sent'||data==='accepted')inp.value='';loadFriends()}
+  catch(e){toast(/friend_request|function/i.test(String(e&&e.message))?"Les amis ne sont pas encore activés sur le serveur.":accErr(e),3000)}
+}
+async function respondFriend(id,ok){try{await ACC.sb.rpc('friend_respond',{p_other:id,p_accept:ok})}catch(e){}loadFriends()}
+async function removeFriend(id){try{await ACC.sb.rpc('friend_remove',{p_other:id})}catch(e){}loadFriends()}
+function inviteFriend(uid,btn){netReady(()=>{NET.ws.send(JSON.stringify({t:'invite',to:uid,info:myInfo()}));if(btn){btn.disabled=true;btn.textContent='Envoyée'}})}
+/* recherche classée */
+function startRanked(){
+  if(!ACC.user){showAcct(ACC.sb?'signup':'unavailable');return}
+  netReady(()=>{NET.ws.send(JSON.stringify({t:'queue',info:myInfo(),tr:SAVE.tr|0}));FR.searchAt=Date.now();searchUI(true)});
+}
+function stopRanked(){if(NET.ws&&NET.ws.readyState===1)NET.ws.send(JSON.stringify({t:'unqueue'}));FR.searchAt=0;searchUI(false)}
+function searchUI(on){
+  clearInterval(FR.searchT);const s=$('wSearch'),b=$('pRanked');if(s)s.hidden=!on;if(b)b.hidden=on;
+  if(on)FR.searchT=setInterval(()=>{const t=$('wTime');if(!t||!FR.searchAt){clearInterval(FR.searchT);return}const n=Math.floor((Date.now()-FR.searchAt)/1000);t.textContent=Math.floor(n/60)+':'+String(n%60).padStart(2,'0')},500);
+}
+/* invitation reçue */
+function showInvite(m){
+  if(NET.inMatch||G.mode==='play'&&RUN.mode==='online'){NET.ws.send(JSON.stringify({t:'inviteReply',id:m.id,ok:false}));return}
+  FR.inv=m;const ov=$('inviteOv');ov.hidden=false;let left=30;
+  const draw=()=>{$('inviteBox').innerHTML=`<span class="lbl">Invitation</span><h2>${escH(m.from.pseudo)} t'invite à jouer !</h2>
+    <p>${trHtml(m.from.tr||0)} · partie amicale, sans trophées en jeu.</p>
+    <div class="pbtns"><button class="go big" id="invYes">Rejoindre</button><button class="go alt" id="invNo">Refuser (${left})</button></div>`;
+    $('invYes').onclick=()=>answerInvite(true);$('invNo').onclick=()=>answerInvite(false)};
+  draw();sfx.green&&sfx.green();haptic&&haptic('medium');
+  clearInterval(FR.invT);FR.invT=setInterval(()=>{left--;if(left<=0)answerInvite(false);else{const b=$('invNo');if(b)b.textContent='Refuser ('+left+')'}},1000);
+}
+function answerInvite(ok){
+  clearInterval(FR.invT);$('inviteOv').hidden=true;const m=FR.inv;FR.inv=null;if(!m)return;
+  if(ok){if(G.mode==='play'||G.mode==='fight'){G.mode='menu';G.paused=false;$('pauseOv').hidden=true}if(FR.searchAt)stopRanked();RUN.mode='online';$('menu').hidden=true}
+  if(NET.ws&&NET.ws.readyState===1)NET.ws.send(JSON.stringify({t:'inviteReply',id:m.id,ok,info:myInfo()}));
+}
 function showLobby(msg){
-  RUN.mode='online';
-  panel(lobbyHead()+(msg?`<p style="color:var(--rec);font-weight:700">${msg}</p>`:'')+
-  `<div class="btns"><button class="go" id="pCreate">Créer un salon</button></div>
-   <div class="joinrow"><input id="codeIn" type="text" maxlength="8" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" placeholder="CODE" aria-label="Code du salon"><button class="go alt" id="pJoin">Rejoindre</button></div>
-   <p>Crée un salon et envoie le code à ton pote, ou entre le code qu'il t'a donné. Match en 21 points, 3 minutes, dans l'arène choisie par celui qui crée le salon.</p>
+  RUN.mode='online';NET.ranked=false;
+  const c=CH[pKey],acct=!!ACC.user;
+  panel(`<span class="lbl">Salle d'attente</span><h1>Jouer en ligne</h1>${msg?`<p class="aerr">${escH(msg)}</p>`:''}
+   <div class="wroom" id="wroom">
+    <div class="wcol">
+      <div class="wme"><canvas data-pk="${pKey}"></canvas><div><b>${acct?escH(ACC.pseudo):'Invité'}</b><span>${c.name} · ${trHtml(SAVE.tr)}</span></div></div>
+      <button class="go big wrk" id="pRanked">${TROPHY_SVG}<span>Partie classée</span><small>+30 / −20</small></button>
+      <div class="wsearch" id="wSearch" hidden><i class="spin"></i><div><b>Recherche d'un adversaire…</b><small id="wTime">0:00</small></div><button class="go alt sm" id="pUnq">Annuler</button></div>
+      <span class="lbl">Partie amicale avec un code</span>
+      <div class="joinrow"><button class="go alt" id="pCreate">Créer un salon</button></div>
+      <div class="joinrow"><input id="codeIn" type="text" maxlength="8" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" placeholder="CODE" aria-label="Code du salon"><button class="go alt" id="pJoin">Rejoindre</button></div>
+    </div>
+    <div class="wcol wfr">
+      <span class="lbl">Amis</span>
+      ${acct?`<div class="joinrow"><input id="frIn" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Pseudo de ton ami"><button class="go alt" id="frAdd">Ajouter</button></div><div class="frlist" id="frList"></div>`
+        :`<p class="amuted">Crée un compte pour ajouter tes amis, voir qui est en ligne et les inviter directement.</p><button class="go" id="frAcct">Créer un compte</button>`}
+    </div>
+   </div>
    <div class="btns"><button class="go alt" id="pMenu">Retour au menu</button></div>`,
-  {pCreate:()=>netConnect(()=>netSend({t:'create'})),pJoin:()=>{const c=($('codeIn').value||'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,4);if(c.length!==4){lobbyErr('Le code fait 4 lettres.');return}netConnect(()=>netSend({t:'join',code:c,info:myInfo()}))},pMenu:()=>{netLeave();toMenu()}});
+  {pCreate:()=>{if(FR.searchAt)stopRanked();netConnect(()=>netSend({t:'create'}))},
+   pJoin:()=>{const c=($('codeIn').value||'').toUpperCase().replace(/[^A-Z]/g,'').slice(0,4);if(c.length!==4){lobbyErr('Le code fait 4 lettres.');return}if(FR.searchAt)stopRanked();netConnect(()=>netSend({t:'join',code:c,info:myInfo()}))},
+   pMenu:()=>{if(FR.searchAt)stopRanked();netLeave();toMenu()},pRanked:startRanked,pUnq:stopRanked,frAdd:addFriend,frAcct:()=>showAcct(ACC.sb?'signup':'unavailable')});
   paintPanelPortraits();
   const ci=$('codeIn');if(ci){ci.addEventListener('input',e=>{if(e.isComposing)return;const v=ci.value.toUpperCase().replace(/[^A-Z]/g,'').slice(0,4);if(v!==ci.value)ci.value=v});ci.addEventListener('keydown',e=>{if(e.key==='Enter')$('pJoin').click()})}
+  const fi=$('frIn');if(fi)fi.addEventListener('keydown',e=>{if(e.key==='Enter')addFriend()});
+  if(FR.searchAt)searchUI(true);
+  if(acct){netEnsure();renderFriends();loadFriends()}
+  clearInterval(FR.pollT);FR.pollT=setInterval(()=>{if(!lobbyOpen()){clearInterval(FR.pollT);return}askPresence();FR.listT++;if(FR.listT%2===0)loadFriends()},5000);
 }
 function lobbyErr(msg){showLobby(msg)}
 function showHostWait(){
   const g=NET.guest,gc=g&&CH[g.char];
+  if(NET.ranked&&g&&!NET.autoGo){NET.autoGo=true;setTimeout(()=>{if(NET.role==='host'&&NET.guest&&!NET.inMatch)onlineStart()},1600)}
   panel(`<span class="lbl">Partie privée · tu es l'hôte</span><h1>Salon ouvert</h1>
    <div class="codebox"><span class="lbl">Code à partager</span><b id="codeTxt">${NET.code}</b><button class="go alt sm" id="pCopy">Copier</button><button class="go sm" id="pShare">Inviter</button></div>
+   ${NET.ranked?`<p class="rkbadge">${TROPHY_SVG} Partie classée · victoire +30, défaite −20</p>`:''}
    ${g?`<div class="opp"><canvas data-pk="${g.char}"></canvas><div><span class="lbl">Adversaire connecté</span><b>${g.pseudo?escH(String(g.pseudo).slice(0,16)):gc?gc.name:'Joueur'}</b><span>${g.pseudo&&gc?gc.name+' · ':''}Prêt à jouer.</span></div></div>`:`<p class="wait">En attente d'un adversaire…</p>`}
    <p>Arène : ${selArena==='random'?'aléatoire':ARENAS[selArena].name}. Ton joueur : ${CH[pKey].name}.</p>
    <div class="btns">${g?'<button class="go" id="pGo">Lancer le match</button>':''}<button class="go alt" id="pQuit">Fermer le salon</button></div>`,
@@ -1009,7 +1177,8 @@ function shareRoom(){const url=roomLink(),text='Viens jouer contre moi sur Klash
   try{navigator.clipboard.writeText(url?text+'\n'+url:text).then(()=>toast('Lien copié'),()=>selectCode())}catch(e){selectCode()}}
 function selectCode(){const el=$('codeTxt');if(!el)return;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
 function showGuestWait(){
-  panel(`<span class="lbl">Partie privée · salon ${NET.code}</span><h1>Connecté !</h1><p class="wait">En attente que l'hôte lance le match…</p>
+  panel(NET.ranked?`<span class="lbl">Partie classée</span><h1>Adversaire trouvé !</h1><p class="rkbadge">${TROPHY_SVG} ${NET.oppPseudo?escH(NET.oppPseudo)+' · ':''}victoire +30, défaite −20</p><p class="wait">Le match commence…</p>`
+    :`<span class="lbl">Partie ${NET.oppPseudo?'amicale avec '+escH(NET.oppPseudo):'privée · salon '+NET.code}</span><h1>Connecté !</h1><p class="wait">En attente que l'hôte lance le match…</p>`+`
    <div class="btns"><button class="go alt" id="pQuit">Quitter le salon</button></div>`,{pQuit:()=>{netLeave();showLobby()}});
 }
 /* --- match start/end --- */
@@ -1025,7 +1194,7 @@ function onlineInit(arena){setTimeout(warnSoftGPU,1500);
 }
 function onlineStart(){
   if(NET.role!=='host'||!NET.guest)return;
-  const g=NET.guest,arena=selArena==='random'?pick(ARENA_KEYS):selArena;
+  const g=NET.guest,arena=pickArena();
   P.ch=CH[pKey];A.ch=CH[g.char]||CH.coq;P.eq=equipOf(pKey);A.eq=g.eq||{};P.lvl=lvOf(pKey).lv;A.lvl=g.lvl||1;
   onlineInit(arena);
   NET.oppPseudo=g.pseudo||'';netSend({t:'start',hc:pKey,he:P.eq,gc:A.ch.key,ge:A.eq,arena,hl:P.lvl,gl:A.lvl,hp:ACC.pseudo||''});
@@ -1038,9 +1207,12 @@ function showOnlineEnd(my,their){
   const win=my>their,gain=win?80:25;SAVE.k+=gain;saveGame();
   RUN.last={win,sP:my,sA:their,opp:A.ch,fights:G.fights};
   const xp=matchXP(win,my),xr=gainXP(pKey,xp);
-  RUN.earnHtml=`<div class="earn"><span class="klash">${kHtml(gain)} KLASH gagnés</span><small>${win?'Victoire en ligne':'Participation'} +${gain} · Solde ${SAVE.k.toLocaleString('fr-FR')}</small></div>`+xpHtml(pKey,xp,xr);
+  RUN.earnHtml=(NET.ranked&&my!==their?applyTrophies(trophyDelta(win,'ranked')):'')+`<div class="earn"><span class="klash">${kHtml(gain)} KLASH gagnés</span><small>${win?'Victoire en ligne':'Participation'} +${gain} · Solde ${SAVE.k.toLocaleString('fr-FR')}</small></div>`+xpHtml(pKey,xp,xr);
   const host=NET.role==='host';
-  panel(`<span class="lbl">Partie privée · ${NET.code||''}</span><h1>${win?'Victoire':my===their?'Égalité':'Défaite'}</h1>${scoreBlock()}<p>${P.ch.name} contre ${A.ch.name}.</p>
+  if(NET.ranked){panel(`<span class="lbl">Partie classée</span><h1>${win?'Victoire':my===their?'Égalité':'Défaite'}</h1>${scoreBlock()}<p>${P.ch.name} contre ${NET.oppPseudo?escH(NET.oppPseudo)+' ('+A.ch.name+')':A.ch.name}.</p>
+   <div class="btns"><button class="go" id="pRk">Rejouer en classé</button><button class="go alt" id="pLob">Salle d'attente</button><button class="go alt" id="pQuit">Menu</button></div>`,
+   {pRk:()=>{netLeave();showLobby();startRanked()},pLob:()=>{netLeave();showLobby()},pQuit:()=>{netLeave();toMenu()}});return}
+  panel(`<span class="lbl">Partie ${NET.oppPseudo?'amicale':'privée · '+(NET.code||'')}</span><h1>${win?'Victoire':my===their?'Égalité':'Défaite'}</h1>${scoreBlock()}<p>${P.ch.name} contre ${A.ch.name}.</p>
    <div class="btns"><button class="go" id="pRe">${host?'Revanche':'Demander une revanche'}</button><button class="go alt" id="pQuit">Quitter</button></div>`,
   {pRe:()=>{if(host){if(NET.guest)onlineStart();else toast("Ton adversaire n'est plus là.")}else{netSend({t:'rematch'});toast("Demande envoyée à l'hôte")}},pQuit:()=>{netLeave();toMenu()}});
 }
@@ -1261,6 +1433,93 @@ const ARENAS={
   cage:{name:'La Cage',sky:['#120a06','#2a170d'],apron:'#3a2a22',floor:'#4b4542',paint:'rgba(255,122,26,.42)',line:'rgba(255,230,180,.8)',speck:'rgba(255,200,150,.07)',word:'CAGE',wordC:'rgba(255,122,26,.35)',stands:'row',decor:'cage',tint:'rgba(255,140,40,.07)'}
 };
 const ARENA_KEYS=Object.keys(ARENAS);
+/* ================= trophées & chemin des trophées (style Clash Royale) ================= */
+const TROPHY_MAX=5000,START_CH=['coq','torche','mur'],START_AR=['nuit'];
+const ROAD=[
+  {t:500, ch:'eclair',   ar:'pro',    k:300},
+  {t:1000,               ar:'plage',  k:400, pack:'argent'},
+  {t:1500,ch:'bulldozer',ar:'neige',  k:400},
+  {t:2000,               ar:'toit',   k:500, pack:'or'},
+  {t:2500,ch:'pieuvre',  ar:'temple', k:500},
+  {t:3000,ch:'glacon',   ar:'sable',  k:600},
+  {t:3500,ch:'fantome',  ar:'jade',   k:700},
+  {t:4000,ch:'tornade',  ar:'lave',   k:800},
+  {t:4500,ch:'fusee',                 k:1000,pack:'or'},
+  {t:5000,               ar:'cage',   k:2500,pack:'or',title:'Légende du Court'}
+];
+const TROPHY_SVG='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3h12v2h3v3a5 5 0 0 1-4.6 5A6 6 0 0 1 13 15.9V18h3.5v3h-9v-3H11v-2.1A6 6 0 0 1 7.6 13 5 5 0 0 1 3 8V5h3zm0 4H5v1a3 3 0 0 0 1.4 2.5A8 8 0 0 1 6 8zm12 0v1a8 8 0 0 1-.4 2.5A3 3 0 0 0 19 8V7z"/></svg>';
+const LOCK_SVG='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z"/></svg>';
+// sauvegardes d'avant les trophées : les persos déjà montés de niveau restent jouables
+if(!Number.isFinite(SAVE.tr)){SAVE.tr=0;SAVE.trBest=0;SAVE.grand=Object.keys(SAVE.lv||{}).filter(k=>{const L=SAVE.lv[k];return L&&(L.lv>1||L.xp>0)&&!START_CH.includes(k)});saveLocal()}
+if(!Number.isFinite(SAVE.trBest))SAVE.trBest=SAVE.tr;if(!Array.isArray(SAVE.grand))SAVE.grand=[];
+const trFmt=n=>Math.round(n).toLocaleString('fr-FR');
+const trHtml=n=>`<span class="trc">${TROPHY_SVG}${trFmt(n)}</span>`;
+const roadFor=(key,kind)=>ROAD.find(r=>r[kind]===key);
+function chUnlocked(k){if(START_CH.includes(k)||SAVE.grand.includes(k))return true;const r=roadFor(k,'ch');return !!r&&SAVE.trBest>=r.t}
+function arUnlocked(k){if(START_AR.includes(k))return true;const r=roadFor(k,'ar');return !r||SAVE.trBest>=r.t}
+const unlockedArenas=()=>ARENA_KEYS.filter(arUnlocked);
+const pickArena=()=>selArena!=='random'&&arUnlocked(selArena)?selArena:pick(unlockedArenas());
+function trFloor(){let f=0;for(const r of ROAD)if(SAVE.trBest>=r.t)f=r.t;return f}       // on ne redescend jamais sous un palier atteint
+/* gains / pertes selon le mode */
+function trophyDelta(win,ctx){
+  if(ctx==='ranked')return win?30:-20;
+  if(ctx==='friendly')return 0;
+  if(RUN.mode==='libre'){const d=curDiff?curDiff():selDiff;return win?[8,14,20,26][d]||8:-[2,5,8,10][d]||-2}
+  if(RUN.mode==='survie')return win?10+Math.min(RUN.streak,10):-6;
+  if(RUN.mode==='tournoi')return win?(RUN.T&&RUN.T.champ===0?75:15):-8;
+  return 0;
+}
+/* applique le résultat, débloque les paliers franchis, renvoie le bloc HTML à afficher */
+function applyTrophies(delta){
+  const old=SAVE.tr,floor=trFloor();
+  SAVE.tr=clamp(Math.round(old+delta),Math.min(old,floor),TROPHY_MAX);
+  const real=SAVE.tr-old,prevBest=SAVE.trBest,got=[];
+  if(SAVE.tr>SAVE.trBest){SAVE.trBest=SAVE.tr;for(const r of ROAD)if(r.t>prevBest&&r.t<=SAVE.trBest){got.push(r);SAVE.k+=r.k||0;if(r.pack)SAVE.packs[r.pack]=(SAVE.packs[r.pack]||0)+1}}
+  saveGame();try{if(NET.ws&&NET.ws.readyState===1)NET.ws.send(JSON.stringify({t:'tr',tr:SAVE.tr}))}catch(e){}
+  if(got.length)setTimeout(()=>showRoadReward(got),900);
+  if(!real&&!delta)return '';
+  const sign=real>0?'+':real<0?'−':'±';
+  return `<div class="trline ${real>0?'up':real<0?'down':''}">${TROPHY_SVG}<b>${sign}${Math.abs(real)}</b><span>${trFmt(SAVE.tr)} / ${trFmt(TROPHY_MAX)}</span>${real===0&&delta<0?'<small>Palier protégé</small>':''}</div>`;
+}
+function rewardChips(r){
+  const out=[];
+  if(r.ch)out.push(`<span class="rwd ch"><canvas data-pk="${r.ch}"></canvas><em>${CH[r.ch].name}</em></span>`);
+  if(r.ar)out.push(`<span class="rwd ar" data-ar="${r.ar}"><i></i><em>${ARENAS[r.ar].name}</em></span>`);
+  if(r.pack)out.push(`<span class="rwd pk"><i class="pmini big" style="--pc:${LOOT[r.pack].col}"></i><em>${LOOT[r.pack].n}</em></span>`);
+  if(r.k)out.push(`<span class="rwd kk">${kHtml(r.k)}</span>`);
+  if(r.title)out.push(`<span class="rwd tt"><em>Titre « ${r.title} »</em></span>`);
+  return out.join('');
+}
+function paintRewardArt(root){
+  root.querySelectorAll('canvas[data-pk]').forEach(c=>paintPortrait(c,c.dataset.pk,'full',{}));
+  root.querySelectorAll('[data-ar] i').forEach(el=>{const k=el.parentNode.dataset.ar;try{if(!ARTC['a_'+k])ARTC['a_'+k]=arenaArt(k).toDataURL('image/jpeg',.8);el.style.backgroundImage=`url(${ARTC['a_'+k]})`}catch(e){}});
+}
+function showRoadReward(list){
+  const ov=$('roadOv'),box=$('roadBox');
+  box.innerHTML=`<span class="lbl">Chemin des trophées</span><h2>Palier ${trFmt(list[list.length-1].t)} atteint !</h2>
+    <div class="rwds">${list.map(rewardChips).join('')}</div>
+    <p>${list.some(r=>r.ch||r.ar)?'Nouveaux contenus débloqués, ils sont disponibles tout de suite.':'Récompenses ajoutées à ton compte.'}</p>
+    <div class="pbtns"><button class="go big" id="roadOk">Génial !</button></div>`;
+  ov.hidden=false;paintRewardArt(box);sfx.green&&sfx.green();haptic&&haptic('heavy');
+  $('roadOk').onclick=()=>{ov.hidden=true;try{renderMenu()}catch(e){}};
+}
+/* vue « Chemin » */
+function renderRoad(){
+  const el=$('roadView');if(!el)return;
+  const pct=v=>Math.min(100,v/TROPHY_MAX*100);
+  el.innerHTML=`<div class="roadhead"><div><span class="lbl">Chemin des trophées</span><h2>${trHtml(SAVE.tr)}</h2></div>
+     <p>Gagne des matchs pour monter. Une récompense tous les 500 trophées, jusqu'à 5 000. Tu ne redescends jamais sous un palier atteint.</p></div>
+   <div class="roadwrap"><div class="road">
+     <div class="rbar"><i style="width:${pct(SAVE.tr)}%"></i></div>
+     ${ROAD.map(r=>{const st=SAVE.trBest>=r.t?'got':SAVE.tr<r.t&&(ROAD.find(x=>x.t>SAVE.trBest)||{}).t===r.t?'next':'lock';
+       return `<div class="rnode ${st}" style="left:${pct(r.t)}%"><div class="rcard">${rewardChips(r)}</div><b>${st==='got'?'✓ ':''}${trFmt(r.t)}</b></div>`}).join('')}
+   </div></div>
+   <p class="rnote">Gains : victoire contre le CPU +8 à +26 selon la difficulté · Mort subite +10 et plus · Tournoi +15 par tour, +75 pour le titre · En ligne classé +30 / −20.</p>`;
+  paintRewardArt(el);
+  const wrap=el.querySelector('.roadwrap'),nx=el.querySelector('.rnode.next')||el.querySelector('.rnode.got:last-of-type');
+  if(wrap&&nx)setTimeout(()=>{wrap.scrollLeft=Math.max(0,nx.offsetLeft-wrap.clientWidth/2)},30);
+}
+
 let ARENA=ARENAS.nuit,ARENA_KEY='nuit',selArena='random';
 function setArena(k){ARENA_KEY=k;ARENA=ARENAS[k];bgGrad=null}
 const DECOR=(()=>{const r=Math.random;
@@ -1478,12 +1737,7 @@ function launch(sh,m){
   if(sh.hype>0)chance+=.06;
   const made=green||rand()<chance;
   sh.jz=sh.visJz||0;sh.vz=.4;useSt(sh,5);if(green)addMana(sh,4);
-  if(!green&&actIs(def,'block')&&def.jz>.25&&dist(def,sh)<(tk(def,'mur')?1.9:1.35)&&sh.ghostT<=0&&rand()<(dist(def,sh)<.95?.6:.4)+(tk(def,'mur')?.3:0)){
-    ball={state:'loose',owner:null,x:sh.x,y:sh.y,z:2.4,vx:(rand()-.5)*5,vy:2.5+rand()*2,vz:2.4};
-    floater('CONTRE !',C.flare,def.x,def.y,2.6,1.2);if(def===P)earn('Contres',4);sfx.shove();G.crowd=1;addHeat(8);addMana(def,8);
-    if(rand()<.6)bubble(sh,'Faute, il m\'a touché !');
-    setAct(sh,'release',.45);return;
-  }
+  if(!green&&actIs(def,'block')&&def.jz>.25&&dist(def,sh)<(tk(def,'mur')?1.9:1.35)&&sh.ghostT<=0&&rand()<(dist(def,sh)<.95?.6:.4)+(tk(def,'mur')?.3:0)){blockHit(def,sh);return}
   const dunk=d<sh.ch.dunkR+(tk(sh,'torche')?1.5:tk(sh,'tornade')?1.2:0)&&made;
   if(isHuman(sh)){
     if(green){emote(sh,'green');sfx.green();earn('Greens',5);if(sh===P)haptic('medium')}
@@ -1501,6 +1755,21 @@ function launch(sh,m){
   ball={state:'flight',owner:null,shooter:sh,made,dunk,rb:made?null:planRebound(),pts:d>6.75?3:2,sx:sh.x,sy:sh.y,sz:hz,tx,ty,tz:HOOP.z+(dunk?.15:0),t:0,dur:dunk?.32:.62+d*.055,arc:dunk?.25:1.4+d*.17,x:sh.x,y:sh.y,z:hz,vx:0,vy:0,vz:0,fire:sh.rocketT>0||sh.ghostT>0};
   setAct(sh,'release',.5);
   sh.meter=0;
+}
+/* contre : la balle est arrachée des mains du tireur */
+function blockHit(def,sh){
+  const dx=sh.x-def.x,dy=sh.y-def.y,l=Math.hypot(dx,dy)||1;
+  ball={state:'loose',owner:null,x:sh.x,y:sh.y,z:2.4,vx:dx/l*3.2+(rand()-.5)*2.5,vy:dy/l*3.2+(rand()-.5)*1.5,vz:2.6};
+  sh.meter=0;floater('CONTRE !',C.flare,def.x,def.y,2.6,1.2);if(def===P)earn('Contres',4);sfx.shove();G.crowd=1;addHeat(8);addMana(def,8);haptic&&haptic('heavy');
+  SHAKE=Math.max(SHAKE,.35);if(rand()<.6)bubble(sh,'Faute, il m\'a touché !');
+  setAct(sh,'release',.45);if(def.act)def.act.data.hit=1;
+}
+/* pendant la préparation du tir : un contre en l'air, au contact, arrache le ballon */
+function liveBlock(){
+  for(const def of [P,A]){const sh=other(def);
+    if(!actIs(def,'block')||def.act.data.hit||def.jz<.3||!actIs(sh,'shoot')||!hasBall(sh)||sh.ghostT>0)continue;
+    const front=(def.x-sh.x)*(HOOP.x-sh.x)+(def.y-sh.y)*(HOOP.y-sh.y)>-.2; // le contreur est devant le tireur
+    if(front&&dist(def,sh)<(tk(def,'mur')?1.9:1.3)){blockHit(def,sh);break}}
 }
 function startShot(a){
   if(!hasBall(a)||busy(a)||actIs(a,'shoot','release','dunk','fall','spin','sup3','supDunk','blink','drib'))return;
@@ -2047,7 +2316,7 @@ function updatePlay(dt){
     if(!actIs(A,...LOCK)&&!busy(A)){const k=stickOf(A);if(k.h&&Math.hypot(k.x,k.y)>.2)accel(A,k.x*5,k.y*5,dt,20);else steerTo(A,0,A===off?10.6:8.3,4,dt)}
     if(G.pause<=0&&G.pending){doCheck(G.pending);if(checkEnd())return}
   }else{
-    G.time-=dt;updatePlayer(dt);if(isHuman(A)){const k=stickOf(A);updateHuman(A,k.x,k.y,NET.rin.C,dt)}else updateAI(dt);
+    G.time-=dt;updatePlayer(dt);if(isHuman(A)){const k=stickOf(A);updateHuman(A,k.x,k.y,NET.rin.C,dt)}else updateAI(dt);liveBlock();
     if(G.time<=0&&!G.golden){
       if(G.sP===G.sA){G.golden=true;G.time=0;floater('PANIER EN OR',C.flare,0,6,2.5,1.6);sfx.whistle();roar(.12,1.2)}
       else{endMatch();return}
@@ -3886,7 +4155,7 @@ function settleEarn(win){
   e[win?(RUN.mode==='tournoi'&&RUN.T.champ===0?'Titre':'Victoire'):'Participation']=bonus;
   const total=Object.values(e).reduce((a,b)=>a+b,0);SAVE.k+=total;saveGame();
   const xp=matchXP(win,G.sP),xr=gainXP(pKey,xp);
-  RUN.earnHtml=`<div class="earn"><span class="klash">${kHtml(total)} KLASH gagnés</span><small>${Object.entries(e).map(([k,v])=>k+' +'+v).join(' · ')} · Solde ${SAVE.k.toLocaleString('fr-FR')}</small></div>`+xpHtml(pKey,xp,xr);
+  RUN.earnHtml=applyTrophies(trophyDelta(win))+`<div class="earn"><span class="klash">${kHtml(total)} KLASH gagnés</span><small>${Object.entries(e).map(([k,v])=>k+' +'+v).join(' · ')} · Solde ${SAVE.k.toLocaleString('fr-FR')}</small></div>`+xpHtml(pKey,xp,xr);
 }
 
 /* ================= DOM HUD + controls ================= */
@@ -4010,7 +4279,7 @@ function startMatch(oppKey,diffIdx){setTimeout(warnSoftGPU,1500);
   $('subLbl').textContent=sub+' · '+D.name;
   Object.assign(G,{mode:'play',sP:0,sA:0,time:cfg.time,target:cfg.target,golden:false,heat:0,pause:0,pending:null,fights:0,crowd:0,floaters:[],bubbles:[],parts:[],rings:[],beams:[],after:[],cut:null,lastScorer:null,fightReady:0,slow:1,flash:0,earn:{},cracks:[],arenaT:1.8,emo:[]});
   ACTORS.forEach(p=>{p.hype=0;p.dazed=0;p.stun=0;p.cd={};p.act=null;p.fallK=0;p.hp=100;p.st=100;p.mana=0;p.tkT=0;p.ultReady=false;p.flip=0;p.wallT=0;p.ghostT=0;p.rocketT=0;p.frozenT=0});
-  setArena(RUN.mode==='tournoi'?(RUN.T.r===3?'pro':(RUN.T.arenas[RUN.T.r])):selArena==='random'?pick(ARENA_KEYS):selArena);
+  setArena(RUN.mode==='tournoi'?(RUN.T.r===3?(arUnlocked('pro')?'pro':pickArena()):(RUN.T.arenas[RUN.T.r]||pickArena())):pickArena());
   F=null;ctlMode='';doCheck('P');$('menu').hidden=true;$('panel').hidden=true;
   try{const el=document.documentElement;if(el.requestFullscreen&&!document.fullscreenElement)el.requestFullscreen().then(()=>{try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}).catch(()=>{})}catch(e){}
 }
@@ -4054,7 +4323,7 @@ function buildTournament(){
   const names=shuffle(NAMES.slice());
   const ents=[{name:'Toi',key:pKey,me:1,rt:.6}];
   for(let i=0;i<15;i++)ents.push({name:names[i],key:keys[i%keys.length],rt:.3+rand()*.6});
-  RUN.T={rounds:[shuffle(ents)],r:0,out:-1,champ:-1,arenas:shuffle(ARENA_KEYS.filter(k=>k!=='pro')).slice(0,3)};
+  RUN.T={rounds:[shuffle(ents)],r:0,out:-1,champ:-1,arenas:shuffle(unlockedArenas().filter(k=>k!=='pro')).slice(0,3)};
 }
 function myOpp(){const L=RUN.T.rounds[RUN.T.r],i=L.findIndex(e=>e.me);return L[i^1]}
 function simRound(T,myWin){
@@ -4105,7 +4374,7 @@ function showBracket(state){
 /* ================= menu ================= */
 let menuView='home';
 const LOCKI='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z"/></svg>',OKI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
-function setView(v){menuView=v;document.querySelectorAll('.rail button[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===(v==='mode'?'home':v)));$('vHome').hidden=v!=='home';$('vMode').hidden=v!=='mode';$('vRoster').hidden=v!=='roster';$('vHelp').hidden=v!=='help';$('vSettings').hidden=v!=='settings';if(v==='settings')renderSettings($('mSet'))}
+function setView(v){menuView=v;document.querySelectorAll('.rail button[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===(v==='mode'?'home':v)));$('vHome').hidden=v!=='home';$('vMode').hidden=v!=='mode';$('vRoster').hidden=v!=='roster';$('vHelp').hidden=v!=='help';$('vSettings').hidden=v!=='settings';if(v==='settings')renderSettings($('mSet'));$('vRoad').hidden=v!=='road';$('vRank').hidden=v!=='rank';if(v==='road')renderRoad();if(typeof rankView==='function')rankView(v==='rank')}
 document.querySelectorAll('.rail button[data-v]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.v)));
 function arenaBg(k){const a=ARENAS[k],fl=a.floor==='wood'?'#c8935a':a.floor;return `linear-gradient(180deg,${a.sky[0]} 0%,${a.sky[1]} 46%,${a.apron} 47%,${a.apron} 56%,${fl} 57%,${fl} 100%)`}
 function skillList(c,lv,full){
@@ -4118,10 +4387,15 @@ function skillList(c,lv,full){
 function renderMenu(){
   const ro=$('roster');
   if(!ro.childElementCount){
-    ROSTER.forEach(c=>{const b=document.createElement('button');b.className='rc';b.dataset.k=c.key;b.innerHTML=`<canvas></canvas><span>${c.name}</span><em class="rlv"></em>`;
-      b.addEventListener('click',()=>{pKey=c.key;renderMenu()});ro.appendChild(b);paintPortrait(b.querySelector('canvas'),c.key,'full',equipOf(c.key))});
+    ROSTER.forEach(c=>{const b=document.createElement('button');b.className='rc';b.dataset.k=c.key;b.innerHTML=`<canvas></canvas><span>${c.name}</span><em class="rlv"></em><i class="rlock"></i>`;
+      b.addEventListener('click',()=>{if(!chUnlocked(c.key)){const r=roadFor(c.key,'ch');toast(c.name+' : débloqué à '+trFmt(r?r.t:0)+' trophées',2600);return}pKey=c.key;renderMenu()});ro.appendChild(b);paintPortrait(b.querySelector('canvas'),c.key,'full',equipOf(c.key))});
   }
-  ro.querySelectorAll('.rc').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.k===pKey);b.querySelector('.rlv').textContent='Nv '+lvOf(b.dataset.k).lv});
+  if(!chUnlocked(pKey))pKey='coq';if(selArena!=='random'&&!arUnlocked(selArena))selArena='random';
+  ro.querySelectorAll('.rc').forEach(b=>{const k=b.dataset.k,ok=chUnlocked(k),r=roadFor(k,'ch');b.setAttribute('aria-pressed',k===pKey);b.classList.toggle('locked',!ok);
+    b.querySelector('.rlv').textContent='Nv '+lvOf(k).lv;b.querySelector('.rlock').innerHTML=ok?'':LOCK_SVG+trFmt(r?r.t:0)});
+  document.querySelectorAll('#arenas .acard[data-a]').forEach(b=>{const k=b.dataset.a;if(k==='random')return;const ok=arUnlocked(k),r=roadFor(k,'ar');b.classList.toggle('locked',!ok);
+    let lk=b.querySelector('.alock');if(!ok&&!lk){lk=document.createElement('i');lk.className='alock';b.appendChild(lk)}if(lk)lk.innerHTML=ok?'':LOCK_SVG+trFmt(r?r.t:0)});
+  $('hdrTr').innerHTML=TROPHY_SVG+'<span>'+trFmt(SAVE.tr)+'</span>';
   const c=CH[pKey],s=SUP[c.super],sp=SPEC[c.key],L=lvOf(pKey),need=xpNeed(L.lv),w=L.lv>=LV_MAX?100:Math.round(L.xp/need*100);
   $('pickInfo').innerHTML=`<div class="lvrow"><span class="lvb">Nv ${L.lv}</span><div class="xpbar"><i style="width:${w}%"></i></div><span class="xpt">${L.lv>=LV_MAX?'Max':L.xp+'/'+need+' XP'}</span></div><b>${c.name}</b><p>${c.role}. Takeover ${sp.name} : ${sp.desc}. ${s.desc}</p><div class="skills full">${skillList(c,L.lv,1)}</div><div class="hbtns"><button class="go" id="pickGo">Choisir ${c.name}</button></div>`;
   $('pickGo').onclick=()=>setView('home');
@@ -4138,13 +4412,14 @@ function renderMenu(){
   const np=Object.values(SAVE.packs).reduce((a,b)=>a+b,0);$('hdrPacks').innerHTML=`<span class="pmini"></span>${np} pack${np>1?'s':''}`;$('hdrPacks').classList.toggle('has',np>0);
   $('startTxt').textContent=selMode==='online'?'Ouvrir le salon':selMode==='tournoi'?'Voir le tableau':selMode==='survie'?'Lancer la série':"C'est parti";
 }
-document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>{selMode=b.dataset.m;renderMenu()}));
+document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>{selMode=b.dataset.m;renderMenu();if(selMode==='online'){ensureAudio();showLobby()}}));
 $('toRoster').addEventListener('click',()=>setView('roster'));
 $('goPlay').addEventListener('click',()=>{ensureAudio();setView('mode')});
 $('modeBack').addEventListener('click',()=>setView('home'));
 $('hdrPacks').addEventListener('click',()=>{ensureAudio();openShop('packs')});
 $('arenas').innerHTML=[['random','Aléatoire']].concat(ARENA_KEYS.map(k=>[k,({nuit:'Playground',pro:'Arène Pro',plage:'Plage',neige:'Chalet',toit:'Rooftop',temple:'Temple',sable:'Sanctuaire',jade:'Île de Jade',lave:'Cratère',cage:'La Cage'})[k]||ARENAS[k].name])).map(([k,n])=>`<button class="acard" data-a="${k}" aria-pressed="${k===selArena}" style="background:${k==='random'?'conic-gradient(from 200deg,#3a2a6a,#e3343f,#ffd23f,#2f7f9e,#3a2a6a)':arenaBg(k)}"><span>${n}</span></button>`).join('');
-$('arenas').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{selArena=b.dataset.a;if(selArena!=='random')setArena(selArena);renderMenu();setTimeout(()=>{try{paintArt()}catch(e){}},0)}));
+$('hdrTr').addEventListener('click',()=>{ensureAudio();setView('road')});
+$('arenas').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.a;if(k!=='random'&&!arUnlocked(k)){const r=roadFor(k,'ar');toast(ARENAS[k].name+' : débloquée à '+trFmt(r?r.t:0)+' trophées',2600);return}selArena=b.dataset.a;if(selArena!=='random')setArena(selArena);renderMenu();setTimeout(()=>{try{paintArt()}catch(e){}},0)}));
 document.querySelectorAll('#diff button').forEach(b=>b.addEventListener('click',()=>{selDiff=+b.dataset.d;renderMenu()}));
 
 /* ================= input ================= */
@@ -4291,11 +4566,13 @@ function renderSettings(el){
     <div class="setrow"><span>Son</span>${seg('snd',[[1,'Activé'],[0,'Coupé']])}</div>
     <div class="setrow"><span>Vibrations</span>${seg('vib',[[1,'Activées'],[0,'Coupées']])}</div>
     <div class="setrow"><span>Graphismes</span>${seg('gfx',[['auto','Auto'],['high','3D max'],['eco','Économie']])}</div>
+    <div class="setrow"><span>Langue</span>${seg('lang',[['fr','Français'],['en','English']])}</div>
     ${accOn()?`<div class="setrow"><span>Compte</span><button class="go alt" data-acct style="min-height:36px;padding:0 14px">${ACC.user?escH(ACC.pseudo||'Mon compte'):'Se connecter'}</button></div>`:''}
     <div class="setrow"><span>Progression</span><button class="go alt danger" data-reset style="min-height:36px;padding:0 14px">Réinitialiser</button></div>
     <div class="setfoot"><span>Klash Court v${VERSION} · ${gfxStatus()}</span>${window.CC_PRIVACY?`<a href="${window.CC_PRIVACY}" target="_blank" rel="noopener">Confidentialité</a>`:''}</div></div>`;
   el.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    const k=g.dataset.k,raw=b.dataset.v,v=k==='gfx'?raw:+raw,prev=S[k];S[k]=v;saveGame();sfx.blip();
+    const k=g.dataset.k,raw=b.dataset.v,v=(k==='gfx'||k==='lang')?raw:+raw,prev=k==='lang'?LANG:S[k];S[k]=v;saveGame();sfx.blip();
+    if(k==='lang'){if(prev!==v)setTimeout(()=>location.reload(),150);return}
     if(k==='snd'){ensureAudio();applySound()}
     if(k==='vib'&&v)haptic('medium');
     if(k==='gfx'&&prev!==v){if(prev==='eco'||v==='eco'){setTimeout(()=>location.reload(),150);return}R3.setHigh&&R3.setHigh(v==='high')}
@@ -4342,22 +4619,63 @@ function accErr(e){const m=String(e&&(e.message||e.error_description||e)||'');
   if(/Failed to fetch|NetworkError|Load failed|network/i.test(m))return 'Pas de connexion au serveur. Vérifie ton réseau.';
   if(/same.*password|different from the old/i.test(m))return "Choisis un mot de passe différent de l'ancien.";
   return m||'Une erreur est survenue.'}
-/* --- sauvegarde locale <-> compte --- */
-function savePayload(){const p=JSON.parse(JSON.stringify(SAVE));delete p.set;delete p.uid;p.best=RUN.best||0;return p}
-function applyRemote(r){
-  const set=SAVE.set;for(const k of Object.keys(SAVE))delete SAVE[k];
+/* --- sauvegarde locale <-> compte ---
+   Chaque appareil retient la version du compte sur laquelle il s'est basé (SAVE.base = updated_at)
+   et l'empreinte de ce qu'il a envoyé (SAVE.syncHash). Ouvrir le jeu ne compte pas comme un changement :
+   seul un vrai progrès local est envoyé, et jamais par-dessus une version plus récente venue d'un autre appareil. */
+const LOCAL_ONLY=['set','uid','base','syncHash','ts','welcomed'];
+function savePayload(){const p=JSON.parse(JSON.stringify(SAVE));for(const k of LOCAL_ONLY)delete p[k];p.best=RUN.best||0;return p}
+function hashStr(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36)+':'+s.length}
+const curHash=()=>hashStr(JSON.stringify(savePayload()));
+const accDirty=()=>SAVE.uid===ACC.uid&&curHash()!==SAVE.syncHash;
+function applyRemote(r,ru){
+  const keep={};for(const k of ['set','welcomed'])keep[k]=SAVE[k];for(const k of Object.keys(SAVE))delete SAVE[k];
   Object.assign(SAVE,{k:500,owned:[],equip:{},day:'',lv:{},packs:{bronze:1,argent:0,or:0}},r||{});
   if(!Number.isFinite(SAVE.k)||SAVE.k<0)SAVE.k=500;if(!Array.isArray(SAVE.owned))SAVE.owned=[];if(!SAVE.equip||typeof SAVE.equip!=='object')SAVE.equip={};if(!SAVE.lv||typeof SAVE.lv!=='object')SAVE.lv={};if(!SAVE.packs)SAVE.packs={bronze:0,argent:0,or:0};
-  SAVE.set=set;SAVE.uid=ACC.uid;SAVE.v=2;
+  Object.assign(SAVE,keep);SAVE.uid=ACC.uid;SAVE.v=2;
   if(Number.isFinite(SAVE.best)){RUN.best=SAVE.best;try{localStorage.setItem('cc_best',RUN.best)}catch(e){}}delete SAVE.best;
+  SAVE.base=ru||null;SAVE.syncHash=curHash();
   saveLocal();accRefreshUI();
 }
-function accQueue(){if(!ACC.user)return;ACC.dirty=true;clearTimeout(ACC.syncT);ACC.syncT=setTimeout(accPush,2500)}
-async function accPush(){if(!ACC.user||!ACC.dirty||ACC.pushing)return;ACC.pushing=true;ACC.dirty=false;let fail=false;
-  try{const {error}=await ACC.sb.from('profiles').update({save:savePayload(),updated_at:new Date().toISOString()}).eq('id',ACC.uid);if(error)throw error}
-  catch(e){fail=true;ACC.dirty=true}
-  ACC.pushing=false;if(ACC.dirty){clearTimeout(ACC.syncT);ACC.syncT=setTimeout(accPush,fail?15000:2500)}}
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&ACC.dirty){clearTimeout(ACC.syncT);accPush()}});
+function accQueue(){if(!ACC.user||ACC.loading||SAVE.uid!==ACC.uid)return;if(!accDirty())return;ACC.dirty=true;clearTimeout(ACC.syncT);ACC.syncT=setTimeout(accPush,2500)}
+async function accPush(){
+  if(!ACC.user||ACC.pushing||SAVE.uid!==ACC.uid)return;
+  if(!accDirty()){ACC.dirty=false;return}
+  ACC.pushing=true;ACC.dirty=false;let fail=false,conflict=false;
+  try{
+    const p=savePayload(),h=hashStr(JSON.stringify(p)),now=new Date().toISOString();
+    const row={save:p,updated_at:now};if(!ACC.noTr)row.trophies=Math.max(0,Math.min(5000,SAVE.tr|0));
+    let q=ACC.sb.from('profiles').update(row).eq('id',ACC.uid);
+    if(SAVE.base)q=q.eq('updated_at',SAVE.base);       // n'écrit que si personne n'a sauvegardé entre-temps
+    const {data,error}=await q.select('updated_at');if(error){if(/trophies/.test(error.message||'')&&!ACC.noTr){ACC.noTr=true;ACC.dirty=true}throw error}
+    if(!data||!data.length)conflict=true;else{SAVE.base=data[0].updated_at;SAVE.syncHash=h;saveLocal()}
+  }catch(e){fail=true;ACC.dirty=true}
+  ACC.pushing=false;
+  if(conflict){await accPull();return}
+  if(ACC.dirty||accDirty()){clearTimeout(ACC.syncT);ACC.syncT=setTimeout(accPush,fail?15000:2500)}
+}
+/* récupère la version du compte et décide qui gagne */
+async function accPull(){
+  if(!ACC.user||ACC.pulling)return;ACC.pulling=true;
+  try{const {data,error}=await ACC.sb.from('profiles').select('save,updated_at').eq('id',ACC.uid).maybeSingle();if(error)throw error;
+    if(data)accResolve(data.save&&typeof data.save.k==='number'?data.save:null,data.updated_at)}
+  catch(e){}
+  ACC.pulling=false;
+}
+function accResolve(remote,ru){
+  if(!remote){SAVE.base=ru||null;ACC.dirty=true;accPush();return}
+  const dirty=accDirty(),changed=ru!==SAVE.base;
+  if(!changed){if(dirty){ACC.dirty=true;accPush()}return}     // personne d'autre n'a joué : on envoie nos progrès
+  if(!dirty){applyRemote(remote,ru);return}                    // rien de neuf ici : on prend la version du compte
+  // les deux appareils ont progressé sans se voir : on garde la progression la plus avancée
+  if(progScore(remote)>=progScore(SAVE))applyRemote(remote,ru);else{SAVE.base=ru;saveLocal();ACC.dirty=true;accPush()}
+}
+document.addEventListener('visibilitychange',()=>{
+  if(!ACC.user)return;
+  if(document.hidden){if(accDirty()){clearTimeout(ACC.syncT);accPush()}}
+  else accPull();                                              // retour sur le jeu : on récupère ce qui a été joué ailleurs
+});
+setInterval(()=>{if(ACC.user&&!document.hidden&&(G.mode==='menu'||G.mode==='over'))accPull()},45000);
 /* --- session --- */
 async function accSession(session){
   const u=session&&session.user;
@@ -4368,18 +4686,16 @@ async function accSession(session){
 async function accLoad(u){
   ACC.user=u;ACC.uid=u.id;ACC.email=u.email||'';
   let prof=null;
-  try{const {data,error}=await ACC.sb.from('profiles').select('pseudo,save').eq('id',u.id).maybeSingle();if(error)throw error;prof=data}catch(e){toast('Compte connecté, synchronisation impossible pour le moment.',4000)}
+  try{const {data,error}=await ACC.sb.from('profiles').select('pseudo,save,updated_at').eq('id',u.id).maybeSingle();if(error)throw error;prof=data}catch(e){toast('Compte connecté, synchronisation impossible pour le moment.',4000)}
   if(!prof){const ps=(u.user_metadata&&u.user_metadata.pseudo)||('Joueur'+String(Math.floor(Math.random()*9000+1000)));
-    try{await ACC.sb.from('profiles').insert({id:u.id,pseudo:ps,save:{}})}catch(e){}prof={pseudo:ps,save:{}}}
+    try{await ACC.sb.from('profiles').insert({id:u.id,pseudo:ps,save:{}})}catch(e){}prof={pseudo:ps,save:{},updated_at:null}}
   ACC.pseudo=prof.pseudo||'';
-  const remote=prof.save&&typeof prof.save.k==='number'?prof.save:null;
-  if(SAVE.uid===u.id){                       // cet appareil suit déjà ce compte
-    if(remote&&(remote.ts||0)>(SAVE.ts||0))applyRemote(remote);else{accQueue()}
-  }else if(!remote){                         // compte neuf : il récupère la progression de l'appareil
-    SAVE.uid=u.id;saveLocal();ACC.dirty=true;accPush();
-  }else if(!SAVE.uid&&progScore(SAVE)>progScore(remote)+50){showAcct('choose',{remote});return}
-  else applyRemote(remote);
-  accRefreshUI();
+  const remote=prof.save&&typeof prof.save.k==='number'?prof.save:null,ru=prof.updated_at||null;
+  if(SAVE.uid===u.id){accResolve(remote,ru)}                   // cet appareil suit déjà ce compte
+  else if(!remote){SAVE.uid=u.id;SAVE.base=ru;SAVE.syncHash='';saveLocal();ACC.dirty=true;accPush()}  // compte neuf : il prend la progression de l'appareil
+  else if(!SAVE.uid&&progScore(SAVE)>progScore(remote)+50){showAcct('choose',{remote,ru});return}
+  else applyRemote(remote,ru);
+  accRefreshUI();netEnsure();if(NET.ws&&NET.ws.readyState===1)netHello();
   if(!$('acctOv').hidden&&['login','signup','welcome','wait'].includes(ACC.view))showAcct('done');
 }
 async function accInit(){
@@ -4466,16 +4782,195 @@ async function accAction(a,btn,opt){
       const pw=$('aPass').value;if(pw.length<6)throw new Error('Mot de passe : 6 caractères minimum.');
       const {error}=await sb.auth.updateUser({password:pw});if(error)throw error;toast('Mot de passe modifié',2500);closeAcct()});break;
     case 'logout':if(btn.dataset.armed!=='1'){btn.dataset.armed='1';btn.textContent='Confirmer la déconnexion';break}
-      if(ACC.dirty)await accPush();try{await sb.auth.signOut()}catch(e){}
+      if(accDirty())await accPush();try{await sb.auth.signOut()}catch(e){}
       LEAVING=true;try{localStorage.removeItem('cc_save');localStorage.removeItem('cc_best');const s=JSON.stringify({set:SAVE.set,welcomed:1,k:500});localStorage.setItem('cc_save',s)}catch(e){}
       location.reload();break;
     case 'delete':if(btn.dataset.armed!=='1'){btn.dataset.armed='1';btn.textContent='Confirmer : tout supprimer définitivement';break}
       await aBusy(btn,async()=>{const {error}=await sb.rpc('delete_me');if(error)throw error;try{await sb.auth.signOut()}catch(e){}
         LEAVING=true;try{localStorage.removeItem('cc_save');localStorage.removeItem('cc_best')}catch(e){}location.reload()});break;
-    case 'keepRemote':applyRemote(opt.remote);showAcct('done');break;
-    case 'keepLocal':SAVE.uid=ACC.uid;saveLocal();ACC.dirty=true;await accPush();showAcct('done');break;
+    case 'keepRemote':applyRemote(opt.remote,opt.ru);showAcct('done');break;
+    case 'keepLocal':SAVE.uid=ACC.uid;SAVE.base=opt.ru||null;SAVE.syncHash='';saveLocal();ACC.dirty=true;await accPush();showAcct('done');break;
   }
 }
+
+/* ================= classement en direct ================= */
+const RK={timer:0,prev:{},at:0,rows:null,mine:null,err:''};
+function rankView(open){
+  clearInterval(RK.timer);RK.timer=0;
+  if(!open)return;
+  renderRank();rankFetch();
+  RK.timer=setInterval(()=>{if(document.hidden)return;rankFetch()},10000);
+}
+async function rankFetch(){
+  if(!ACC.sb){RK.err=accOn()?'Connexion au classement impossible pour le moment.':'Le classement est disponible sur la version en ligne du jeu.';renderRank();return}
+  try{
+    if(ACC.user&&accDirty&&accDirty())await accPush();
+    const [lb,me]=await Promise.all([ACC.sb.rpc('leaderboard',{lim:100}),ACC.user?ACC.sb.rpc('my_rank'):Promise.resolve({data:null})]);
+    if(lb.error)throw lb.error;
+    const prev=RK.prev;RK.prev={};RK.rows=(lb.data||[]).map(r=>{const ch=prev[r.pseudo]!==undefined&&prev[r.pseudo]!==r.trophies?(r.trophies>prev[r.pseudo]?'up':'down'):'';RK.prev[r.pseudo]=r.trophies;return Object.assign({ch},r)});
+    RK.mine=me&&me.data&&me.data[0]||null;RK.at=Date.now();RK.err='';
+  }catch(e){RK.err=/leaderboard|function/i.test(String(e&&e.message))?'Le classement n\'est pas encore activé sur le serveur.':'Connexion au classement impossible pour le moment.'}
+  renderRank();
+}
+function renderRank(){
+  const el=$('rankView');if(!el||$('vRank').hidden)return;
+  const medal=r=>r===1?'🥇':r===2?'🥈':r===3?'🥉':'#'+r;
+  const rows=RK.rows;
+  el.innerHTML=`<div class="rankhead"><div><span class="lbl">Classement mondial</span><h2>Top 100</h2></div>
+     <span class="live"><i></i>En direct${RK.at?' · mis à jour toutes les 10 s':''}</span></div>
+    ${RK.mine?`<div class="rkme">${TROPHY_SVG}<b>Ta place : ${medal(RK.mine.rank)}</b><span>${trFmt(RK.mine.trophies)} trophées · ${trFmt(RK.mine.total)} joueurs</span></div>`
+      :ACC.sb&&!ACC.user?`<div class="rkme"><span>Crée un compte pour apparaître dans le classement.</span><button class="go sm" id="rkAcct">Créer un compte</button></div>`:''}
+    ${RK.err?`<p class="amuted">${RK.err}</p>`:''}
+    <div class="rklist">${rows?rows.length?rows.map(r=>`<div class="rkrow ${r.me?'me':''} ${r.ch}"><span class="rkn">${medal(r.rank)}</span><b>${escH(r.pseudo)}</b><span class="rkt">${trHtml(r.trophies)}</span></div>`).join(''):'<p class="amuted">Personne pour le moment. Sois le premier !</p>':RK.err?'':'<p class="amuted">Chargement…</p>'}</div>`;
+  const b=$('rkAcct');if(b)b.onclick=()=>showAcct('signup');
+}
+
+/* ================= langue : français / anglais ================= */
+const I18N_EXACT={
+'Jouer':'Play','Joueurs':'Players','Boutique':'Shop','Réglages':'Settings','Commandes':'Controls','Trophées':'Trophies','Classement':'Leaderboard',
+'Retour':'Back','Retour au menu':'Back to menu','Menu':'Menu','Quitter':'Quit','Annuler':'Cancel','Fermer':'Close','Choisir':'Choose','Rejoindre':'Join','Inviter':'Invite','Accepter':'Accept','Refuser':'Decline','Retirer':'Remove','Retirer ?':'Remove?','Ajouter':'Add','Copier':'Copy','Enregistrer':'Save','Récupérer':'Claim','Équiper':'Equip','Équipé · retirer':'Equipped · remove','Essayage':'Try-on','Tout révéler':'Reveal all','Ouvrir':'Open','Envoyée':'Sent',
+'Son':'Sound','Vibrations':'Vibration','Graphismes':'Graphics','Progression':'Progress','Compte':'Account','Langue':'Language','Activé':'On','Coupé':'Off','Activées':'On','Coupées':'Off','Auto':'Auto','3D max':'Max 3D','Économie':'Battery saver','Réinitialiser':'Reset','Confirmer (tout effacer)':'Confirm (erase all)',
+'Pause':'Pause','Reprendre':'Resume','Abandonner':'Give up','Abandonner le match':'Forfeit the match',"Confirmer l'abandon":'Confirm forfeit',
+'Tir':'Shoot','Feinte':'Fake','Spin':'Spin','Contre':'Block','Voler':'Steal','Rebond':'Rebound','Bousculer':'Shove','Chambrer':'Taunt','Célébrer':'Celebrate','Garde':'Guard','Coup':'Jab','Crochet':'Hook','Saisir':'Grab','maintenir':'hold','Contester':'Contest',
+'Dribbles':'Dribbles','Niveaux':'Levels','Défense':'Defense','Extras':'Extras','Tension':'Heat','Stamina':'Stamina',
+'Victoire':'Victory','Défaite':'Defeat','Égalité':'Draw','Rejouer':'Play again','Autre adversaire':'New opponent','Revanche':'Rematch','Demander une revanche':'Ask for a rematch','Recommencer':'Start over','Affronter':'Face them','Qualifié !':'Qualified!','Éliminé':'Eliminated','Champion':'Champion','Fin de série':'Streak over',
+'Match libre':'Free match','Mort subite':'Sudden death','Tournoi':'Tournament','En ligne':'Online','Difficulté':'Difficulty','Débutant':'Rookie','Pro':'Pro','Légende':'Legend','Mythe':'Myth',
+'Huitièmes de finale':'Round of 16','Quarts de finale':'Quarter-finals','Demi-finales':'Semi-finals','Finale':'Final','8es':'R16','Quarts':'QF','Demies':'SF',
+'Arène':'Arena','Aléatoire':'Random','aléatoire':'random','Playground':'Playground','Plage':'Beach','Chalet':'Chalet','Temple':'Temple','Sanctuaire':'Sanctuary','Cratère':'Crater','Rooftop':'Rooftop',
+'Toi':'You','CPU':'CPU','Nv':'Lv','Max':'Max','Niveau max':'Max level','Maîtrise':'Mastery','Points':'Points','Rebonds':'Rebounds','Contres':'Blocks','Interceptions':'Steals','Greens':'Greens','Supers':'Supers','Titre':'Title','Participation':'Participation','Solde':'Balance','Record':'Best',
+'Commun':'Common','Rare':'Rare','Épique':'Epic','Légendaire':'Legendary','Nouveau':'New','Populaire':'Popular','Meilleure offre':'Best value','Exclusifs':'Exclusive','Packs':'Packs','Pack':'Pack','Pièces':'Coins','Bientôt':'Soon','possédé':'owned','verrouillé':'locked','Passé':'Done','Tôt':'Early','Tard':'Late',
+'Têtes':'Heads','Visage':'Face','Cou':'Neck','Mains':'Hands','Pieds':'Feet','Dos':'Back','Mascottes':'Mascots','Effets':'Effects','Green':'Green','Dunks':'Dunks','Réactions':'Reactions',
+'Amis':'Friends','Invité':'Guest','Invitation':'Invite','Hors ligne':'Offline','En match':'In a match','Demande envoyée':'Request sent','Veut être ton ami':'Wants to be your friend','Partie classée':'Ranked match','Partie privée':'Private match','Salle d\'attente':'Waiting room','Jouer en ligne':'Play online','Créer un salon':'Create a room','Salon ouvert':'Room open','Connecté !':'Connected!','Lancer le match':'Start the match','Fermer le salon':'Close the room','Quitter le salon':'Leave the room','Salon en ligne':'Online room','Partie terminée':'Match over','Rejouer en classé':'Play ranked again','Adversaire trouvé !':'Opponent found!','Le match commence…':'The match is starting…','Recherche d\'un adversaire…':'Looking for an opponent…','Victoire en ligne':'Online win',
+'Mon compte':'My account','Se connecter':'Log in','Se déconnecter':'Log out','Créer un compte':'Create an account','Créer mon compte':'Create my account','J\'ai déjà un compte':'I already have an account','Jouer sans compte':'Play without an account','Plus tard':'Later','Mot de passe oublié ?':'Forgot password?','Mot de passe oublié':'Forgot password','Envoyer le lien':'Send the link','Nouveau mot de passe':'New password','Nouveau compte':'New account','Supprimer mon compte':'Delete my account','Confirmer la déconnexion':'Confirm log out','Confirmer : tout supprimer définitivement':'Confirm: delete everything permanently','Vérifie tes emails':'Check your email','Comptes indisponibles':'Accounts unavailable','Deux progressions trouvées':'Two save files found','Laquelle garder ?':'Which one do you keep?','Celle du compte':'The account one','Celle de cet appareil':'This device\'s one','L\'autre sera remplacée.':'The other one will be replaced.','C\'est parti':'Let\'s go','Génial !':'Awesome!',
+'Chemin des trophées':'Trophy Road','Classement mondial':'Global leaderboard','Top 100':'Top 100','En direct':'Live','Palier protégé':'Tier protected','Chargement…':'Loading…',
+'Ouvrir le salon':'Open a room','Voir le tableau':'See the bracket','Lancer la série':'Start the streak','Tableau du tournoi':'Tournament bracket','Nouveau tournoi':'New tournament','Choisis ton mode':'Choose your mode','Avec':'With',
+'Mes packs':'My packs','Navigation':'Navigation','Code du salon':'Room code','CODE':'CODE','Email':'Email','Mot de passe':'Password','Pseudo de ton ami':'Your friend\'s username','Carte':'Card',
+'Ultime':'Ultimate','Takeover':'Takeover','Super':'Super','Bagarre !':'Fight!','Bagarre':'Fight','Joueur':'Player','Ton joueur':'Your player','Prochain adversaire':'Next opponent','Adversaire connecté':'Opponent connected','Code à partager':'Code to share','Arbitre':'Referee',
+'Tourne ton téléphone pour jouer en paysage':'Turn your phone sideways to play',
+'Shooteur':'Shooter','Dunkeur':'Dunker','Pivot':'Center','Meneur':'Point guard','Défenseuse':'Defender','Costaud':'Bruiser','Ailier':'Wing','Sang-froid':'Ice-cold','Acrobate':'Acrobat','Sprinteuse':'Sprinter','Manieur de balle':'Ball handler','Tireur d\'élite':'Sharpshooter','Protecteur':'Protector','Colosse':'Colossus','Voleuse':'Thief','Insaisissable':'Untouchable',
+'Licorne':'Unicorn','Astronaute':'Astronaut','Pingouin':'Penguin','Ours brun':'Brown bear','Jetpack':'Jetpack','Palmes':'Flippers','Biceps':'Biceps','Lunettes':'Glasses','Chevilles':'Ankles','Jambes':'Legs'
+};
+const I18N_FRAG=[
+['Ton navigateur n\'utilise pas la carte graphique : active l\'« accélération matérielle » dans ses réglages pour un jeu fluide.','Your browser isn\'t using the graphics card: turn on "hardware acceleration" in its settings for smooth gameplay.'],
+['Le mode en ligne fonctionne sur ta version hébergée du jeu (serveur Klash Court). Ici, la page ne peut pas se connecter à Internet.','Online play works on your hosted version of the game (Klash Court server). This page can\'t connect to the internet.'],
+['L\'achat de KLASH en euros arrivera avec la version appli (paiement sécurisé via les stores). Pour l\'instant, les KLASH se gagnent en jouant : victoires, greens, supers, tournois et bonus du jour.','Buying KLASH with real money will come with the app version (secure payment through the stores). For now, KLASH are earned by playing: wins, greens, supers, tournaments and the daily bonus.'],
+['Chaque carte donne des KLASH ou un objet tiré au hasard selon les taux affichés. Un objet déjà possédé est un doublon : il est converti en KLASH (25 % de son prix). Tu gagnes aussi un pack à chaque niveau de joueur.','Each card gives KLASH or a random item based on the odds shown. An item you already own is a duplicate: it turns into KLASH (25% of its price). You also get a pack at every player level.'],
+['Chaque match fait gagner de l\'XP au joueur utilisé. Nv 3 : Takeover · Nv 4 : stats +5 % · Nv 5 : Ultime · Nv 10 : maîtrise. Un pack offert à chaque niveau.','Every match gives XP to the player you used. Lv 3: Takeover · Lv 4: stats +5% · Lv 5: Ultimate · Lv 10: mastery. A free pack at every level.'],
+['Se remplit avec paniers, dribbles passés, rebonds, contres. Booste tes spécialités 22 s et débloque l\'Ultime (H).','Fills up with baskets, dribbles that beat your man, rebounds and blocks. Boosts your specialties for 22 s and unlocks the Ultimate (H).'],
+['Contacts, chambrages, célébrations. Pleine : tu peux lancer la bagarre (B). Coup J · Crochet K · Garde L · Saisir U','Contact, taunts, celebrations. When full you can start the fight (B). Jab J · Hook K · Guard L · Grab U'],
+['Baisse en sprintant, sautant, frappant. À plat : plus lent, Green window réduite.','Drops when sprinting, jumping and punching. When empty: slower, smaller Green window.'],
+['Gagne des matchs pour monter. Une récompense tous les 500 trophées, jusqu\'à 5 000. Tu ne redescends jamais sous un palier atteint.','Win matches to climb. A reward every 500 trophies, up to 5,000. You never drop below a tier you\'ve reached.'],
+['Gains : victoire contre le CPU +8 à +26 selon la difficulté · Mort subite +10 et plus · Tournoi +15 par tour, +75 pour le titre · En ligne classé +30 / −20.','Gains: win vs CPU +8 to +26 depending on difficulty · Sudden death +10 and up · Tournament +15 per round, +75 for the title · Online ranked +30 / −20.'],
+['Ta progression est sauvegardée automatiquement. Connecte-toi avec le même email sur un autre appareil pour la retrouver.','Your progress is saved automatically. Log in with the same email on another device to get it back.'],
+['Crée ton compte pour garder ta progression, tes KLASH et tes objets, même si tu changes de téléphone.','Create your account to keep your progress, KLASH and items, even if you change phones.'],
+['Crée un compte pour ajouter tes amis, voir qui est en ligne et les inviter directement.','Create an account to add friends, see who\'s online and invite them directly.'],
+['Connexion au service des comptes impossible. Vérifie ton réseau, puis recharge la page.','Can\'t reach the account service. Check your connection, then reload the page.'],
+['Entre ton email : tu vas recevoir un lien pour choisir un nouveau mot de passe.','Enter your email: you\'ll get a link to choose a new password.'],
+['Nouveaux contenus débloqués, ils sont disponibles tout de suite.','New content unlocked, available right away.'],
+['2 dribbles signature par joueur (boutons du milieu). Le 2e se débloque au niveau 2.','2 signature dribbles per player (middle buttons). The 2nd unlocks at level 2.'],
+['Contre · Voler · Contester (maintenir) · Rebond automatique ou bouton Rebond','Block · Steal · Contest (hold) · Automatic rebound or Rebound button'],
+['Maintenir le bouton Tir, relâcher dans la Green window','Hold the Shoot button, release in the Green window'],
+['Garde quand il arme son crochet · Saisis-le par le maillot','Guard when he loads up his hook · Grab him by the jersey'],
+['Ajoute un ami avec son pseudo pour l\'inviter directement.','Add a friend by username to invite them directly.'],
+['Le classement est disponible sur la version en ligne du jeu.','The leaderboard is available on the online version of the game.'],
+['Le classement n\'est pas encore activé sur le serveur.','The leaderboard isn\'t enabled on the server yet.'],
+['Les amis ne sont pas encore activés sur le serveur.','Friends aren\'t enabled on the server yet.'],
+['Les comptes fonctionnent sur la version en ligne du jeu.','Accounts work on the online version of the game.'],
+['Connexion au classement impossible pour le moment.','Can\'t load the leaderboard right now.'],
+['Compte connecté, synchronisation impossible pour le moment.','Logged in, but syncing isn\'t possible right now.'],
+['Connexion au serveur impossible. Réessaie dans un instant.','Can\'t connect to the server. Try again in a moment.'],
+['Connexion au serveur perdue. Crée un nouveau salon.','Connection to the server lost. Create a new room.'],
+['Ton salon a expiré. Crée un nouveau salon.','Your room expired. Create a new room.'],
+['Le serveur ne répond pas. Vérifie ta connexion.','The server isn\'t responding. Check your connection.'],
+['Pas de connexion au serveur. Vérifie ton réseau.','No connection to the server. Check your network.'],
+['Connexion au serveur impossible.','Can\'t connect to the server.'],['Connexion au serveur perdue.','Connection to the server lost.'],
+['Confirme d\'abord ton email (regarde aussi dans les spams).','Confirm your email first (check your spam folder too).'],
+['Pseudo : 3 à 16 caractères (lettres, chiffres, _ - .).','Username: 3 to 16 characters (letters, numbers, _ - .).'],
+['Trop de tentatives. Réessaie dans quelques minutes.','Too many attempts. Try again in a few minutes.'],
+['Choisis un mot de passe différent de l\'ancien.','Choose a password different from the old one.'],
+['Liste d\'amis indisponible pour le moment.','Friend list unavailable right now.'],
+['Personne pour le moment. Sois le premier !','Nobody yet. Be the first!'],
+['Crée un compte pour apparaître dans le classement.','Create an account to appear on the leaderboard.'],
+['Ta progression est maintenant sauvegardée sur ton compte.','Your progress is now saved to your account.'],
+['Récompenses ajoutées à ton compte.','Rewards added to your account.'],
+['Un compte existe déjà avec cet email.','An account with this email already exists.'],
+['Email ou mot de passe incorrect.','Wrong email or password.'],
+['Mot de passe : 6 caractères minimum.','Password: at least 6 characters.'],
+['Entre ton email et ton mot de passe.','Enter your email and password.'],
+['Adresse email invalide.','Invalid email address.'],['Ce pseudo est déjà pris.','This username is taken.'],['Une erreur est survenue.','Something went wrong.'],
+['Aucun joueur avec ce pseudo.','No player with this username.'],['C\'est ton propre pseudo.','That\'s your own username.'],['Demande déjà envoyée.','Request already sent.'],['Vous êtes déjà amis.','You\'re already friends.'],['Limite de 200 amis atteinte.','200-friend limit reached.'],['Connecte-toi à ton compte.','Log in to your account.'],['Connecte-toi à ton compte pour jouer en classé.','Log in to your account to play ranked.'],
+['Ton ami est en plein match.','Your friend is in a match.'],['Ton ami n\'est plus en ligne.','Your friend is no longer online.'],['Ton ami s\'est déconnecté.','Your friend disconnected.'],['Ton ami est déjà en match.','Your friend is already in a match.'],['Cette invitation n\'est plus valable.','This invite is no longer valid.'],
+['a refusé ton invitation.','declined your invite.'],['s\'est déconnecté.','disconnected.'],['est maintenant ton ami !','is now your friend!'],['Invitation envoyée à','Invite sent to'],['Demande envoyée à l\'hôte','Request sent to the host'],['Demande envoyée à','Request sent to'],
+['t\'invite à jouer !','invites you to play!'],['partie amicale, sans trophées en jeu.','friendly match, no trophies at stake.'],
+['Ton adversaire a quitté la partie.','Your opponent left the match.'],['Ton adversaire a quitté le salon.','Your opponent left the room.'],['Ton adversaire n\'est plus là.','Your opponent is gone.'],['Ton adversaire veut une revanche !','Your opponent wants a rematch!'],['Ton adversaire a quitté :','Your opponent left:'],
+['La victoire t\'est attribuée.','You get the win.'],
+['En attente que l\'hôte lance le match…','Waiting for the host to start the match…'],['En attente d\'un adversaire…','Waiting for an opponent…'],
+['Partie privée · tu es l\'hôte','Private match · you\'re the host'],['Partie privée · salon','Private match · room'],['Partie amicale avec un code','Friendly match with a code'],['Partie amicale avec','Friendly match with'],['Partie amicale','Friendly match'],
+['victoire +30, défaite −20','win +30, loss −20'],['Partie privée avec un pote, par code.','Private match with a friend, using a code.'],
+['Viens jouer contre moi sur Klash Court ! Code du salon','Come play against me on Klash Court! Room code'],
+['Le code fait 4 lettres.','The code has 4 letters.'],['Aucun salon avec ce code.','No room with this code.'],['Ce salon est déjà complet.','This room is already full.'],['Salon expiré.','Room expired.'],['Serveur plein, réessaie.','Server full, try again.'],
+['Code copié','Code copied'],['Lien copié','Link copied'],['Mot de passe modifié','Password changed'],
+['Un email de confirmation a été envoyé à','A confirmation email was sent to'],['Clique sur le lien, puis reviens te connecter.','Click the link, then come back and log in.'],
+['Si un compte existe pour','If an account exists for'],['un lien pour changer ton mot de passe vient d\'être envoyé.','a link to change your password has just been sent.'],
+['Pseudo (3 à 16 caractères)','Username (3 to 16 characters)'],['(6 caractères min.)','(min. 6 characters)'],
+['Bienvenue sur Klash Court','Welcome to Klash Court'],
+['Ta place :','Your rank:'],['mis à jour toutes les 10 s','updates every 10 s'],['trophées ·','trophies ·'],['joueurs','players'],
+['Palier','Tier'],['atteint !','reached!'],['débloqué à','unlocks at'],['débloquée à','unlocks at'],['trophées','trophies'],
+['affichage 3D','3D display'],['affichage 2D','2D display'],['qualité réduite','reduced quality'],['sans carte graphique','no graphics card'],['ips','fps'],
+['Bonus du jour : +','Daily bonus: +'],['KLASH gagnés','KLASH earned'],['KLASH · niveau max','KLASH · max level'],['objets','items'],
+['21 points ou 3 minutes contre le CPU.','21 points or 3 minutes vs the CPU.'],['Enchaîne les adversaires. Une défaite et c\'est fini.','Beat opponents back to back. One loss and it\'s over.'],['16 joueurs, des 8es jusqu\'à la finale.','16 players, from the round of 16 to the final.'],
+['Matchs en 15 points, 2 min 30.','Games to 15 points, 2:30.'],['Le titre revient à','The title goes to'],['Tu as remporté les 4 tours avec','You won all 4 rounds with'],['Champion du playground !','Playground champion!'],
+['Victoire n°','Win #'],['Record :','Best:'],['victoire','win'],['victoires','wins'],['d\'affilée. Le niveau monte toutes les deux victoires.','in a row. The level goes up every two wins.'],
+['t\'a sorti. Tu as aligné','knocked you out. You won'],['Sorti en','Out in the'],
+['Aucune bagarre.','No fights.'],['bagarres sur le terrain.','fights on the court.'],['bagarre sur le terrain.','fight on the court.'],['contre','vs'],['niveau','level'],
+['Tu peux changer de joueur dans le menu.','You can change player in the menu.'],['Arène :','Arena:'],['Ton joueur :','Your player:'],
+['Ballon pour le CPU · check en haut','CPU ball · check up top'],['Ballon pour toi · check en haut','Your ball · check up top'],['Ballon pour ton adversaire · check en haut','Opponent\'s ball · check up top'],
+['Panier en or : le prochain panier gagne.','Golden basket: next basket wins.'],['Les arbitres séparent les deux joueurs','The referees split them up'],['La tension retombe','Tempers cool down'],['Tension max · Bagarre dispo','Max heat · Fight available'],['la tension explose','tempers explode'],['ultime débloquée','ultimate unlocked'],['Fin du takeover','Takeover over'],
+['Tir, contre, vol, rebond et 1er dribble','Shot, block, steal, rebound and 1st dribble'],['2e dribble débloqué au niveau 2','2nd dribble unlocks at level 2'],['2e dribble','2nd dribble'],
+['Maîtrise : Takeover +5 s et stats +10 %','Mastery: Takeover +5 s and stats +10%'],['ULTIME AU NIVEAU 5','ULTIMATE AT LEVEL 5'],['ULTIME DÉBLOQUÉE','ULTIMATE UNLOCKED'],['Ultime :','Ultimate:'],
+['Contestations divisées par deux, Green window +20 %','Contests halved, Green window +20%'],['Contres plus faciles, rebonds dominés','Easier blocks, owns the boards'],['Dribbles +35 % de réussite, vitesse +10 %','Dribbles +35% success, speed +10%'],['Dunk 1,5 m plus loin, vitesse +8 %','Dunks from 1.5 m further, speed +8%'],['Green window +30 %, jamais fatigué','Green window +30%, never tired'],['Impossible à bousculer, rebonds dominés','Can\'t be shoved, owns the boards'],['Interceptions presque garanties, plus longue portée','Near-guaranteed steals, longer reach'],['Saute plus haut, dunk 1,2 m plus loin, rebonds','Jumps higher, dunks from 1.2 m further, rebounds'],['Vitesse +15 %, stamina infinie','Speed +15%, infinite stamina'],
+['7 s de turbo : vitesse, stamina infinie, ballon en feu.','7 s of turbo: speed, infinite stamina, ball on fire.'],['Crossovers éclair en zigzag, le défenseur finit au sol.','Lightning zigzag crossovers, the defender hits the floor.'],['Des bras-tentacules arrachent le ballon jusqu\'à 5 m.','Tentacle arms snatch the ball from up to 5 m.'],['Double vrille en l\'air, 3 points garantis de n\'importe où.','Double twist in the air, a guaranteed 3 from anywhere.'],['Le prochain tir adverse est écrasé, même un green.','The next enemy shot gets swatted, even a green.'],['Rayon de glace : l\'adversaire est gelé 3 s.','Ice ray: the opponent is frozen for 3 s.'],['S\'envole en tornade et dunke de n\'importe où.','Takes off in a tornado and dunks from anywhere.'],['Saut, onde de choc : l\'adversaire tombe, ballon libre.','Jump, shockwave: the opponent falls, loose ball.'],['Traverse la défense, impossible à contester pendant 6 s.','Phases through the defense, uncontestable for 6 s.'],['Traverse le terrain en salto enflammé et écrase un dunk.','Flies across the court in a flaming flip and slams it home.'],
+['Atterrissage direct dans les tribunes.','Landed straight in the stands.'],['Envoyé dans les étoiles… et retour tête la première.','Sent to the stars… and back head first.'],['Il a rebondi partout comme une balle de flipper.','He bounced around like a pinball.'],['Il a tourné sur lui-même jusqu\'à se planter dans le sol.','He spun until he drilled into the floor.'],
+['Super Contre','Super Block'],['Super Dribble','Super Dribble'],['Super Vol','Super Steal'],['Super Séisme','Super Quake'],['Super Fantôme','Super Ghost'],['Super Gel','Super Freeze'],['Super Tornade','Super Tornado'],['Super Turbo','Super Turbo'],['Salto Dunk','Flip Dunk'],['Spin à 3 points','3-point Spin'],
+['Entre les jambes','Between the legs'],['Dans le dos','Behind the back'],['Feinte de tir','Shot fake'],['Hésitation','Hesitation'],['Dunk à l\'envers','Reverse dunk'],['Dunk moulin','Windmill dunk'],['Suspendu au cercle','Hang on the rim'],
+['Playground de nuit','Night playground'],['Arène Pro','Pro Arena'],['Plage au coucher du soleil','Sunset beach'],['Chalet enneigé','Snowy chalet'],['Temple des Runes','Rune Temple'],['Sanctuaire du Sceau','Seal Sanctuary'],['Île de Jade','Jade Island'],['Cratère de Lave','Lava Crater'],['La Cage','The Cage'],['Légende du Court','Court Legend'],
+['L\'Éclair','The Flash'],['La Torche','The Torch'],['La Pieuvre','The Octopus'],['La Tornade','The Tornado'],['La Fusée','The Rocket'],['Le Bulldog','The Bulldog'],['Le Fantôme','The Ghost'],['Le Glaçon','The Icicle'],['Le Coq','The Rooster'],['Le Mur','The Wall'],
+['ÉCLAIR','FLASH'],['TORCHE','TORCH'],['PIEUVRE','OCTOPUS'],['TORNADE','TORNADO'],['FUSÉE','ROCKET'],['FANTÔME','GHOST'],['GLAÇON','ICICLE'],['COQ','ROOSTER'],['MUR','WALL'],
+['Pack Bronze','Bronze Pack'],['Pack Argent','Silver Pack'],['Pack Or','Gold Pack'],['cartes · KLASH ou objets','cards · KLASH or items'],['1 rare garanti','1 rare guaranteed'],['acheté et équipé !','bought and equipped!'],['acheté !','bought!'],['Aucun accessoire équipé.','No accessories equipped.'],
+['Bonnet de ski','Ski beanie'],['Bonnet pompon glacé','Frosty bobble hat'],['Bonnet rouge','Red beanie'],['Bonnet sapin','Pine-tree beanie'],['Bonnet tentacules','Tentacle beanie'],['Bandeau champion','Champion headband'],['Baskets en or','Gold sneakers'],['Baskets néon','Neon sneakers'],['Cape de héros','Hero cape'],['Cape nocturne','Night cape'],['Casque de chantier','Hard hat'],['Casque de démolition','Wrecking helmet'],['Casque de pompier','Firefighter helmet'],['Casque spatial','Space helmet'],['Casque viking','Viking helmet'],['Casquette noire','Black cap'],['Casquette rétro','Retro cap'],['Chapeau orageux','Storm hat'],['Chaussures de ski alpines','Alpine ski boots'],['Chaussures de ski','Ski boots'],['Chaîne en or','Gold chain'],['Couronne de vent','Wind crown'],['Couronne du roi','King\'s crown'],['Couronne verte','Green crown'],['Cristaux de glace','Ice crystals'],['Crâne néon','Neon skull'],['Crête dorée','Golden crest'],['Doigt au ciel','Finger to the sky'],['Dragon de feu','Fire dragon'],['Drap hanté','Haunted sheet'],['Ailes de dragon','Dragon wings'],['Flamme verte','Green flame'],['Flammes bleues','Blue flames'],['Gants de boxe','Boxing gloves'],['Gants de ski','Ski gloves'],['Gants en or','Gold gloves'],['Jetpack rouge','Red jetpack'],['Lunettes de soleil','Sunglasses'],['Lunettes dorées','Gold glasses'],['Lunettes spectrales','Spectral glasses'],['Lunettes à 3 points','3-point goggles'],['Mascotte Banane','Banana mascot'],['Mascotte Dragon','Dragon mascot'],['Mascotte Requin','Shark mascot'],['Masque de catch royal','Royal luchador mask'],['Masque de catch','Luchador mask'],['Masque de ski','Ski mask'],['Mitaines en laine','Wool mittens'],['Mur de briques','Brick wall'],['Nuage d\'orage','Storm cloud'],['Onde de choc verte','Green shockwave'],['Pluie de billets','Money rain'],['Pose figée','Freeze pose'],['Poulet géant','Giant chicken'],['Poulpe géant','Giant octopus'],['Poussière d\'or','Gold dust'],['Torse bombé','Chest out'],['Traînée arc-en-ciel','Rainbow trail'],['Trèfle porte-bonheur','Lucky clover'],['Tête de dragon de glace','Ice dragon head'],['Tête de dragon','Dragon head'],['Écharpe d\'hiver','Winter scarf'],['Écharpe glacier','Glacier scarf'],['Éclair vert','Green lightning'],['Étoiles vertes','Green stars'],['Chut au public','Shush the crowd'],['Ça claque le cercle','Rattles the rim'],['Trop petit','Too small'],['Trop facile','Too easy'],
+['CHEVILLES CASSÉES !','ANKLES BROKEN!'],['CONTRE !','BLOCKED!'],['SUPER CONTRE !','SUPER BLOCK!'],['SUPER SÉISME !','SUPER QUAKE!'],['SUPER VOL !','SUPER STEAL!'],['VOLÉ !','STOLEN!'],['INTERCEPTION','STEAL'],['GELÉ !','FROZEN!'],['ÉJECTÉ !','EJECTED!'],['MUR EN FACE !','WALL UP!'],['PANIER EN OR','GOLDEN BASKET'],['DANS LE PUBLIC','INTO THE CROWD'],['BAGARRE !','FIGHT!'],['CONTESTÉ','CONTESTED'],['BLOQUÉ','BLOCKED'],['FATIGUÉ','TIRED'],['FAUTE !','FOUL!'],['IL GAGNE','HE WINS'],['TU GAGNES','YOU WIN'],['K.O. COSMIQUE !','COSMIC K.O.!'],['K.O. TOUPIE !','SPINNING K.O.!'],['ARBITRES','REFS'],['ADVERSAIRE','OPPONENT'],['ARÈNE','ARENA'],['gagne la bagarre','wins the fight'],
+['Ballon perdu','Turnover'],['Bien défendu','Good defense'],['Dans le vide','Whiffed'],['Il passe à travers…','He phases right through…'],['Il flotte au-dessus…','He floats over it…'],['Il ne bouge pas !','He won\'t budge!'],['Raté','Missed'],['Brique !','Brick!'],['Tenu par le maillot','Held by the jersey'],
+['Faute, il m\'a touché !','Foul, he touched me!'],['Joue la balle !','Play the ball!'],['C\'est mon terrain ici.','This is my court.'],['Ce soir t\'es dans mon highlight.','Tonight you\'re in my highlight reel.'],['Je suis en feu.','I\'m on fire.'],['Pousse-moi encore, pour voir…','Push me again, I dare you…'],['Recommence pas.','Don\'t try that again.'],['Regarde et apprends.','Watch and learn.'],['Respire, ça va aller.','Breathe, you\'ll be fine.'],['Retourne sur le banc.','Back to the bench.'],['T\'es en carton !','You\'re made of cardboard!'],['Trop lent, frérot.','Too slow, bro.'],['Tu fais quoi là ?!','What are you doing?!'],['Tu tires comme ta tata.','You shoot like my auntie.'],['Tu vas voir ça.','Watch this.'],['Tu veux quoi là ?','What do you want?'],['Va célébrer ailleurs !','Go celebrate somewhere else!'],['Zéro défense, zéro attaque.','Zero defense, zero offense.'],['À moi de jouer.','My turn.'],['Ça commence.','Here we go.'],['Accroche-toi.','Hold on tight.'],['Admire.','Admire.'],['Ah ouais ?','Oh yeah?'],['Eh, calme-toi !','Hey, calm down!'],['Il a mordu !','He bit!'],['Regarde bien…','Watch closely…'],['Rentre chez toi.','Go home.'],['Tu vas voir !','You\'ll see!'],['Vas-y, viens !','Come on then!'],['Viens me chercher.','Come get me.'],['Appuie sur Célébrer','Press Celebrate'],['le public est avec','the crowd is with'],['Trop facile.','Too easy.'],
+['Bousculer · Chambrer · Célébrer','Shove · Taunt · Celebrate'],['En ligne','Online'],['Jouer la finale','Play the final'],['Jouer les 8es','Play the round of 16'],['Jouer les quarts','Play the quarter-finals'],['Jouer les demies','Play the semi-finals'],['Victoire en ligne','Online win'],['En direct','Live'],['Green window +50 % à 3 points','Green window +50% on 3-pointers'],['Tireur d\'élite','Sharpshooter'],['Manieur de balle','Ball handler'],['Insaisissable','Untouchable'],['Sang-froid','Ice-cold'],['Protecteur','Protector'],['Colosse','Colossus'],['Voleuse','Thief'],['Acrobate','Acrobat'],['Sprinteuse','Sprinter'],['Shooteur','Shooter'],['Dunkeur','Dunker'],['Défenseuse','Defender'],['Costaud','Bruiser'],['Ailier','Wing'],['Meneur','Point guard'],['Pivot','Center'],['Débutant','Rookie'],['Légendaire','Legendary'],['Épique','Epic'],['Commun','Common'],['Victoire','Win'],['Solde','Balance'],['Participation','Participation'],['débloqué','unlocked'],['offert','reward'],['Légende','Legend'],['Mythe','Myth'],['ultime débloquée','ultimate unlocked'],['Titre «','Title "'],['»','"'],['Nv','Lv'],['Série','Streak'],['à 21','to 21'],['à 15','to 15'],['à 11','to 11']
+];
+let LANG='fr';
+try{LANG=SAVE.set.lang||((navigator.language||'fr').toLowerCase().startsWith('fr')?'fr':'en')}catch(e){}
+const I18N_CACHE=new Map(),I18N_RX=I18N_FRAG.concat(I18N_FRAG.filter(([f])=>f.length>3&&f.toUpperCase()!==f).map(([f,e])=>[f.toUpperCase(),e.toUpperCase()])).sort((a,b)=>b[0].length-a[0].length).map(([f,e])=>{
+  const esc=f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),L='A-Za-zÀ-ÿ';
+  return [new RegExp((/^[A-Za-zÀ-ÿ]/.test(f)?`(?<![${L}])`:'')+esc+(/[A-Za-zÀ-ÿ]$/.test(f)?`(?![${L}])`:''),'g'),e,f]});
+function tr(s){
+  if(LANG==='fr'||!s||!/[A-Za-zÀ-ÿ]/.test(s))return s;
+  let r=I18N_CACHE.get(s);if(r!==undefined)return r;
+  const t=s.trim(),lead=s.slice(0,s.indexOf(t)),trail=s.slice(s.indexOf(t)+t.length);
+  if(I18N_EXACT[t]!==undefined)r=lead+I18N_EXACT[t]+trail;
+  else{r=s;for(const [rx,e,f] of I18N_RX){if(r.indexOf(f)<0)continue;rx.lastIndex=0;r=r.replace(rx,e)}}
+  if(I18N_CACHE.size>5000)I18N_CACHE.clear();I18N_CACHE.set(s,r);return r;
+}
+/* traduit tout le texte affiché (DOM) et les textes dessinés sur le terrain (canvas) */
+(function(){
+  const ATTR=['placeholder','aria-label','title'];
+  const fixNode=n=>{if(n.nodeType===3){const pn=n.parentNode;if(pn&&(pn.nodeName==='SCRIPT'||pn.nodeName==='STYLE'||pn.nodeName==='TEXTAREA'))return;const v=n.nodeValue,t=tr(v);if(t!==v)n.nodeValue=t}else if(n.nodeType===1){if(n.tagName==='SCRIPT'||n.tagName==='STYLE')return;for(const a of ATTR){const v=n.getAttribute&&n.getAttribute(a);if(v){const t=tr(v);if(t!==v)n.setAttribute(a,t)}}}};
+  const walk=root=>{if(root.nodeType===3){fixNode(root);return}fixNode(root);const it=document.createTreeWalker(root,NodeFilter.SHOW_TEXT|NodeFilter.SHOW_ELEMENT);let n;while((n=it.nextNode()))fixNode(n)};
+  window.__i18nWalk=walk;
+  if(LANG==='fr')return;
+  document.documentElement.lang='en';
+  new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')fixNode(m.target);else if(m.type==='attributes')fixNode(m.target);else m.addedNodes.forEach(walk)}})
+    .observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:ATTR});
+  walk(document.body);
+  const P2=CanvasRenderingContext2D.prototype;
+  for(const fn of ['fillText','strokeText','measureText']){const o=P2[fn];P2[fn]=function(t,...a){return o.call(this,typeof t==='string'?tr(t):t,...a)}}
+  const ot=document.title;if(ot)document.title=tr(ot);
+})();
 
 $('hdrAcct').addEventListener('click',()=>{ensureAudio();if(!accOn()){showAcct('unavailable');return}showAcct(ACC.user?'account':(ACC.sb?'welcome':'unavailable'))});
 setTimeout(accInit,1700);
@@ -4484,7 +4979,7 @@ setTimeout(accInit,1700);
   setTimeout(()=>{try{ensureAudio()}catch(e){}$('menu').hidden=true;showLobby();const ci=$('codeIn');if(ci){ci.value=code;$('pJoin').click()}},900)}}
 {const boot=$('boot'),done=()=>{boot.classList.add('out');setTimeout(()=>boot.remove(),600)};
  Promise.race([document.fonts?document.fonts.ready:Promise.resolve(),new Promise(r=>setTimeout(r,1400))]).then(()=>setTimeout(done,250))}
-window.__cc={R3,haptic,pauseGame,resumeGame,SND,AC:()=>AC,ensureAudio,_roar,_tone,launch,GC,startFight,renderTo,CH,NET,G,P,A,RUN,SAVE,gainXP,openPack,emote,setView,forceKO:(t)=>{F.stage='fight';const o=A;o.hp=1;startKO(P,o);if(t)F.koType=t},F:()=>F,rebSpot,missShot:(w)=>{const s=w==='A'?A:P;ball={state:'held',owner:s,x:s.x,y:s.y,z:1,vx:0,vy:0,vz:0};s.act=null;launch(s,0.1)},openShop,setArena,dribble:(k)=>dribble(P,k),heat:()=>{G.heat=99;addHeat(5)},mana:(w)=>{const a=w==='A'?A:P;a.mana=99;addMana(a,5)},ball:()=>ball,setP:k=>{pKey=k},setMode:m=>{selMode=m},end:(a,b)=>{G.sP=a;G.sA=b;endMatch()},doSuper:w=>doSuper(w==='A'?A:P),give:w=>{const o=w==='A'?A:P;ball={state:'held',owner:o,x:o.x,y:o.y,z:1,vx:0,vy:0,vz:0}}};
+window.__cc={block,startShot,setAct,HOOP,ACC,R3,haptic,pauseGame,resumeGame,SND,AC:()=>AC,ensureAudio,_roar,_tone,launch,GC,startFight,renderTo,CH,NET,G,P,A,RUN,SAVE,gainXP,openPack,emote,setView,forceKO:(t)=>{F.stage='fight';const o=A;o.hp=1;startKO(P,o);if(t)F.koType=t},F:()=>F,rebSpot,missShot:(w)=>{const s=w==='A'?A:P;ball={state:'held',owner:s,x:s.x,y:s.y,z:1,vx:0,vy:0,vz:0};s.act=null;launch(s,0.1)},openShop,setArena,dribble:(k)=>dribble(P,k),heat:()=>{G.heat=99;addHeat(5)},mana:(w)=>{const a=w==='A'?A:P;a.mana=99;addMana(a,5)},ball:()=>ball,setP:k=>{pKey=k},setMode:m=>{selMode=m},end:(a,b)=>{G.sP=a;G.sA=b;endMatch()},doSuper:w=>doSuper(w==='A'?A:P),give:w=>{const o=w==='A'?A:P;ball={state:'held',owner:o,x:o.x,y:o.y,z:1,vx:0,vy:0,vz:0}}};
 requestAnimationFrame(frame);
 })();
 </script>
