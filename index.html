@@ -11,6 +11,7 @@
 </head>
 <body>
 <title>Klash Court</title>
+<script src="config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Barlow+Condensed:wght@500;700;800&family=Outfit:wght@400;500;600;700;800&display=swap">
@@ -460,6 +461,22 @@ details.keys dd{margin:0}
 @keyframes bootbar{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
 *{-webkit-tap-highlight-color:transparent}body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
 input{-webkit-user-select:text;user-select:text}
+/* comptes */
+#acctOv{z-index:30}
+#acctBox p{margin:0;font:500 14px/1.45 var(--ui);color:#d5d8e0}
+.aform{display:flex;flex-direction:column;gap:8px}
+.aform input{font:600 16px var(--ui);color:#fff;background:rgba(0,0,0,.28);border:1px solid var(--stroke);border-radius:14px;padding:12px 14px;outline:none;width:100%;box-sizing:border-box}
+.aform input:focus{border-color:var(--flare)}
+.aerr{color:#ff8a92!important;font-weight:700!important;min-height:1em}
+.aerr:empty{display:none}
+.alink{border:0;background:none;color:#cfd3dc;font:600 14px var(--ui);text-decoration:underline;cursor:pointer;padding:6px}
+.alink.danger-t{color:#ff8a92}
+.amuted{color:#8e96aa!important;font-size:13px!important}
+.achoose{display:grid;grid-template-columns:1fr 1fr;gap:10px}.achoose .go{flex-direction:column;align-items:flex-start;gap:4px;border-radius:16px;padding:12px 14px;text-align:left}
+.achoose small{font:500 12px/1.3 var(--ui);color:#cfd3dc}
+.pchip.acct{padding:5px 12px 5px 8px}.pchip.acct svg{width:18px;height:18px}.pchip.acct.in{border-color:rgba(61,220,106,.45)}
+.pchip.acct span{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-height:430px){#acctBox{padding:14px;gap:9px}#acctBox h2{font-size:22px}.aform input{padding:9px 12px}}
 </style>
 
 <div id="app">
@@ -512,6 +529,7 @@ input{-webkit-user-select:text;user-select:text}
         <header class="topbar">
           <div class="logo">Klash <em>Court</em></div>
           <span class="tspace"></span>
+          <button class="pchip acct" id="hdrAcct" hidden aria-label="Mon compte"></button>
           <button class="pchip" id="hdrPacks" aria-label="Mes packs"></button>
           <span class="klash" id="menuK"></span>
         </header>
@@ -589,6 +607,7 @@ input{-webkit-user-select:text;user-select:text}
   <div id="toast" hidden></div>
   <section id="pauseOv" class="ov" hidden><div class="glass pcard2"><h2>Pause</h2><div class="pbtns"><button class="go big" id="pResume">Reprendre</button><button class="go alt" id="pSetBtn">Réglages</button><button class="go alt danger" id="pAbandon">Abandonner le match</button></div><div id="pSet" hidden></div></div></section>
   <section id="panel" class="ov" hidden><div class="card" id="panelCard"></div></section>
+  <section id="acctOv" class="ov" hidden><div class="glass pcard2" id="acctBox"></div></section>
 </div>
 
 <script>
@@ -751,7 +770,9 @@ if(!Number.isFinite(SAVE.k)||SAVE.k<0)SAVE.k=500;if(!Array.isArray(SAVE.owned))S
 SAVE.set=Object.assign({snd:1,vib:1,gfx:'auto'},SAVE.set&&typeof SAVE.set==='object'?SAVE.set:{});SAVE.v=2;
 let DAILY=0;
 (()=>{const today=new Date().toISOString().slice(0,10);if(SAVE.day!==today){if(SAVE.day){SAVE.k+=100;DAILY=100}SAVE.day=today}})();
-function saveGame(){try{localStorage.setItem('cc_save',JSON.stringify(SAVE))}catch(e){}}
+let LEAVING=false;
+function saveLocal(){if(LEAVING)return;try{localStorage.setItem('cc_save',JSON.stringify(SAVE))}catch(e){}}
+function saveGame(){SAVE.ts=Date.now();saveLocal();try{accQueue()}catch(e){}}
 saveGame();
 const equipOf=key=>Object.assign({},SAVE.equip[key]||{});
 const owns=id=>SAVE.owned.includes(id)||(ITEM[id]&&ITEM[id].price===0);
@@ -958,7 +979,7 @@ function peerGone(msg){
     panel(`<span class="lbl">Partie privée</span><h1>Partie terminée</h1><p>${msg}</p><div class="btns"><button class="go" id="pLob">Salon en ligne</button><button class="go alt" id="pMenu">Menu</button></div>`,{pLob:()=>{netLeave();showLobby()},pMenu:()=>{netLeave();toMenu()}})}
 }
 /* --- lobby screens --- */
-function myInfo(){return {char:pKey,eq:equipOf(pKey),lvl:lvOf(pKey).lv}}
+function myInfo(){return {char:pKey,eq:equipOf(pKey),lvl:lvOf(pKey).lv,pseudo:ACC.pseudo||''}}
 function lobbyHead(){const c=CH[pKey];return `<span class="lbl">Partie privée</span><h1>Jouer en ligne</h1><div class="opp"><canvas data-pk="${pKey}"></canvas><div><span class="lbl">Ton joueur</span><b>${c.name}</b><span>Ultime : ${SUP[c.super].name}. Tu peux changer de joueur dans le menu.</span></div></div>`}
 function showLobby(msg){
   RUN.mode='online';
@@ -976,7 +997,7 @@ function showHostWait(){
   const g=NET.guest,gc=g&&CH[g.char];
   panel(`<span class="lbl">Partie privée · tu es l'hôte</span><h1>Salon ouvert</h1>
    <div class="codebox"><span class="lbl">Code à partager</span><b id="codeTxt">${NET.code}</b><button class="go alt sm" id="pCopy">Copier</button><button class="go sm" id="pShare">Inviter</button></div>
-   ${g?`<div class="opp"><canvas data-pk="${g.char}"></canvas><div><span class="lbl">Adversaire connecté</span><b>${gc?gc.name:'Joueur'}</b><span>Prêt à jouer.</span></div></div>`:`<p class="wait">En attente d'un adversaire…</p>`}
+   ${g?`<div class="opp"><canvas data-pk="${g.char}"></canvas><div><span class="lbl">Adversaire connecté</span><b>${g.pseudo?escH(String(g.pseudo).slice(0,16)):gc?gc.name:'Joueur'}</b><span>${g.pseudo&&gc?gc.name+' · ':''}Prêt à jouer.</span></div></div>`:`<p class="wait">En attente d'un adversaire…</p>`}
    <p>Arène : ${selArena==='random'?'aléatoire':ARENAS[selArena].name}. Ton joueur : ${CH[pKey].name}.</p>
    <div class="btns">${g?'<button class="go" id="pGo">Lancer le match</button>':''}<button class="go alt" id="pQuit">Fermer le salon</button></div>`,
   {pGo:onlineStart,pQuit:()=>{netLeave();showLobby()},pShare:shareRoom,pCopy:()=>{const t=NET.code;try{navigator.clipboard.writeText(t).then(()=>toast('Code copié'),()=>selectCode())}catch(e){selectCode()}}});
@@ -994,7 +1015,7 @@ function showGuestWait(){
 /* --- match start/end --- */
 function onlineInit(arena){setTimeout(warnSoftGPU,1500);
   RUN.mode='online';D=DIFFS[1];
-  $('tagP').textContent=P.ch.short;$('tagA').textContent=A.ch.short;$('superName').textContent=SUP[P.ch.super].name;
+  $('tagP').textContent=ACC.pseudo||P.ch.short;$('tagA').textContent=NET.oppPseudo||A.ch.short;$('superName').textContent=SUP[P.ch.super].name;
   $('subLbl').textContent='En ligne · '+NET.code;
   Object.assign(G,{mode:'play',sP:0,sA:0,time:180,target:21,golden:false,heat:0,pause:0,pending:null,fights:0,crowd:0,floaters:[],bubbles:[],parts:[],rings:[],beams:[],after:[],cut:null,lastScorer:null,fightReady:0,slow:1,flash:0,earn:{},cracks:[],arenaT:1.8,tkBan:null,emo:[]});
   ACTORS.forEach(p=>{p.hype=0;p.dazed=0;p.stun=0;p.cd={};p.act=null;p.fallK=0;p.hp=100;p.st=100;p.mana=0;p.tkT=0;p.ultReady=false;p.flip=0;p.wallT=0;p.ghostT=0;p.rocketT=0;p.frozenT=0;p.rageT=0;p.koPlant=0;p.koDrill=0});
@@ -1007,10 +1028,10 @@ function onlineStart(){
   const g=NET.guest,arena=selArena==='random'?pick(ARENA_KEYS):selArena;
   P.ch=CH[pKey];A.ch=CH[g.char]||CH.coq;P.eq=equipOf(pKey);A.eq=g.eq||{};P.lvl=lvOf(pKey).lv;A.lvl=g.lvl||1;
   onlineInit(arena);
-  netSend({t:'start',hc:pKey,he:P.eq,gc:A.ch.key,ge:A.eq,arena,hl:P.lvl,gl:A.lvl});
+  NET.oppPseudo=g.pseudo||'';netSend({t:'start',hc:pKey,he:P.eq,gc:A.ch.key,ge:A.eq,arena,hl:P.lvl,gl:A.lvl,hp:ACC.pseudo||''});
 }
 function guestStart(m){
-  P.ch=CH[m.gc]||CH.coq;A.ch=CH[m.hc]||CH.coq;P.eq=m.ge||{};A.eq=m.he||{};P.lvl=m.gl||1;A.lvl=m.hl||1;
+  P.ch=CH[m.gc]||CH.coq;A.ch=CH[m.hc]||CH.coq;P.eq=m.ge||{};A.eq=m.he||{};P.lvl=m.gl||1;A.lvl=m.hl||1;NET.oppPseudo=String(m.hp||'').slice(0,16);
   onlineInit(m.arena);
 }
 function showOnlineEnd(my,their){
@@ -1812,7 +1833,7 @@ function resumeAfterFight(){
 }
 
 /* ================= movement ================= */
-function accel(p,vx,vy,dt,a){let dx=vx-p.vx,dy=vy-p.vy;const l=Math.hypot(dx,dy),m=a*dt;if(l>m){dx*=m/l;dy*=m/l}p.vx+=dx;p.vy+=dy}
+function accel(p,vx,vy,dt,a){if(!(dt>0))return;let dx=vx-p.vx,dy=vy-p.vy;const l=Math.hypot(dx,dy),m=a*dt;if(l>m){dx*=m/l;dy*=m/l}p.vx+=dx;p.vy+=dy}
 function steerTo(p,tx,ty,spd,dt){const dx=tx-p.x,dy=ty-p.y,l=Math.hypot(dx,dy),s=l<.08?0:Math.min(spd,l*4);accel(p,l?dx/l*s:0,l?dy/l*s:0,dt,18)}
 function integrate(p,dt,bounds){
   if(p.stun>0||p.frozenT>0){const f=p.frozenT>0?.0001:.03;p.vx*=Math.pow(f,dt);p.vy*=Math.pow(f,dt)}
@@ -3923,7 +3944,7 @@ function frame(now){
   }catch(e){ERRN++;console.error(e);if(ctx!==CTX0)ctx=CTX0}
 }
 function frameInner(now){
-  const raw=Math.min(.05,(now-last)/1000);last=now;
+  const raw=Math.max(0,Math.min(.05,(now-last)/1000));last=Math.max(last,now);
   sdt=sdt*.75+raw*.25;
   const supActive=[P,A].some(a=>actIs(a,'supDunk','sup3'));
   const dk=dkA(),dkD=dk&&dk.act.data,dkSlow=dk&&dk.act.t>dkD.g+(dkD.ts-dkD.g)*.45&&dk.act.t<dkD.ts+.22;
@@ -4270,6 +4291,7 @@ function renderSettings(el){
     <div class="setrow"><span>Son</span>${seg('snd',[[1,'Activé'],[0,'Coupé']])}</div>
     <div class="setrow"><span>Vibrations</span>${seg('vib',[[1,'Activées'],[0,'Coupées']])}</div>
     <div class="setrow"><span>Graphismes</span>${seg('gfx',[['auto','Auto'],['high','3D max'],['eco','Économie']])}</div>
+    ${accOn()?`<div class="setrow"><span>Compte</span><button class="go alt" data-acct style="min-height:36px;padding:0 14px">${ACC.user?escH(ACC.pseudo||'Mon compte'):'Se connecter'}</button></div>`:''}
     <div class="setrow"><span>Progression</span><button class="go alt danger" data-reset style="min-height:36px;padding:0 14px">Réinitialiser</button></div>
     <div class="setfoot"><span>Klash Court v${VERSION} · ${gfxStatus()}</span>${window.CC_PRIVACY?`<a href="${window.CC_PRIVACY}" target="_blank" rel="noopener">Confidentialité</a>`:''}</div></div>`;
   el.querySelectorAll('.seg').forEach(g=>g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
@@ -4278,9 +4300,10 @@ function renderSettings(el){
     if(k==='vib'&&v)haptic('medium');
     if(k==='gfx'&&prev!==v){if(prev==='eco'||v==='eco'){setTimeout(()=>location.reload(),150);return}R3.setHigh&&R3.setHigh(v==='high')}
     renderSettings(el)})));
+  const ab=el.querySelector('[data-acct]');if(ab)ab.addEventListener('click',()=>showAcct(ACC.user?'account':(ACC.sb?'welcome':'unavailable')));
   const rb=el.querySelector('[data-reset]');let armed=false;
   rb.addEventListener('click',()=>{if(!armed){armed=true;rb.textContent='Confirmer (tout effacer)';setTimeout(()=>{armed=false;if(rb.isConnected)rb.textContent='Réinitialiser'},3500);return}
-    try{localStorage.removeItem('cc_save');localStorage.removeItem('cc_best')}catch(e){}location.reload()});
+    LEAVING=true;try{localStorage.removeItem('cc_save');localStorage.removeItem('cc_best')}catch(e){}location.reload()});
 }
 function canPause(){return (G.mode==='play'||G.mode==='fight')&&RUN.mode!=='online'&&!G.paused}
 function pauseGame(){if(!canPause())return;G.paused=true;input.keys={};input.C=false;if(typeof keyAxis==='function')keyAxis();
@@ -4300,6 +4323,162 @@ setInterval(()=>{const b=$('bPause');const show=(G.mode==='play'||G.mode==='figh
 if(window.CC_APP&&!window.CC_SERVER){const m=document.querySelector('.mcard[data-m=online]');if(m)m.hidden=true}
 setTimeout(()=>{try{paintArt()}catch(e){console.warn(e)}},60);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>setTimeout(()=>{for(const k in ARTC)if(k.startsWith('m_'))delete ARTC[k];try{paintArt()}catch(e){}},50));
+/* ================= comptes joueurs (Supabase) : progression sauvegardée en ligne ================= */
+const ACC={sb:null,user:null,pseudo:'',email:'',ready:false,syncT:0,dirty:false,pushing:false,uid:null};
+const accOn=()=>!!(window.CC_SUPABASE_URL&&window.CC_SUPABASE_KEY);
+const escH=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const PSEUDO_RE=/^[A-Za-z0-9_.\-À-ÖØ-öø-ÿ]{3,16}$/;
+const accRedirect=()=>window.CC_WEB_URL||(/^https?:$/.test(location.protocol)?location.origin+location.pathname:undefined);
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+function progScore(s){if(!s)return 0;let x=0;for(const k in (s.lv||{})){const L=s.lv[k];x+=((L.lv||1)-1)*120+(L.xp||0)}return x+(s.owned||[]).length*200+Math.max(0,(s.k||0)-500)}
+function accErr(e){const m=String(e&&(e.message||e.error_description||e)||'');
+  if(/Invalid login credentials/i.test(m))return 'Email ou mot de passe incorrect.';
+  if(/Email not confirmed/i.test(m))return "Confirme d'abord ton email (regarde aussi dans les spams).";
+  if(/already registered|already been registered/i.test(m))return 'Un compte existe déjà avec cet email.';
+  if(/Password should be|at least 6/i.test(m))return 'Mot de passe : 6 caractères minimum.';
+  if(/rate limit|too many|security purposes/i.test(m))return 'Trop de tentatives. Réessaie dans quelques minutes.';
+  if(/Database error saving new user|duplicate key|profiles_pseudo/i.test(m))return 'Ce pseudo est déjà pris.';
+  if(/valid email|invalid email|Unable to validate email/i.test(m))return 'Adresse email invalide.';
+  if(/Failed to fetch|NetworkError|Load failed|network/i.test(m))return 'Pas de connexion au serveur. Vérifie ton réseau.';
+  if(/same.*password|different from the old/i.test(m))return "Choisis un mot de passe différent de l'ancien.";
+  return m||'Une erreur est survenue.'}
+/* --- sauvegarde locale <-> compte --- */
+function savePayload(){const p=JSON.parse(JSON.stringify(SAVE));delete p.set;delete p.uid;p.best=RUN.best||0;return p}
+function applyRemote(r){
+  const set=SAVE.set;for(const k of Object.keys(SAVE))delete SAVE[k];
+  Object.assign(SAVE,{k:500,owned:[],equip:{},day:'',lv:{},packs:{bronze:1,argent:0,or:0}},r||{});
+  if(!Number.isFinite(SAVE.k)||SAVE.k<0)SAVE.k=500;if(!Array.isArray(SAVE.owned))SAVE.owned=[];if(!SAVE.equip||typeof SAVE.equip!=='object')SAVE.equip={};if(!SAVE.lv||typeof SAVE.lv!=='object')SAVE.lv={};if(!SAVE.packs)SAVE.packs={bronze:0,argent:0,or:0};
+  SAVE.set=set;SAVE.uid=ACC.uid;SAVE.v=2;
+  if(Number.isFinite(SAVE.best)){RUN.best=SAVE.best;try{localStorage.setItem('cc_best',RUN.best)}catch(e){}}delete SAVE.best;
+  saveLocal();accRefreshUI();
+}
+function accQueue(){if(!ACC.user)return;ACC.dirty=true;clearTimeout(ACC.syncT);ACC.syncT=setTimeout(accPush,2500)}
+async function accPush(){if(!ACC.user||!ACC.dirty||ACC.pushing)return;ACC.pushing=true;ACC.dirty=false;let fail=false;
+  try{const {error}=await ACC.sb.from('profiles').update({save:savePayload(),updated_at:new Date().toISOString()}).eq('id',ACC.uid);if(error)throw error}
+  catch(e){fail=true;ACC.dirty=true}
+  ACC.pushing=false;if(ACC.dirty){clearTimeout(ACC.syncT);ACC.syncT=setTimeout(accPush,fail?15000:2500)}}
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&ACC.dirty){clearTimeout(ACC.syncT);accPush()}});
+/* --- session --- */
+async function accSession(session){
+  const u=session&&session.user;
+  if(!u){ACC.user=null;ACC.uid=null;ACC.pseudo='';accRefreshUI();return}
+  if(ACC.uid===u.id&&(ACC.pseudo||ACC.loading))return;
+  ACC.loading=true;try{await accLoad(u)}finally{ACC.loading=false}
+}
+async function accLoad(u){
+  ACC.user=u;ACC.uid=u.id;ACC.email=u.email||'';
+  let prof=null;
+  try{const {data,error}=await ACC.sb.from('profiles').select('pseudo,save').eq('id',u.id).maybeSingle();if(error)throw error;prof=data}catch(e){toast('Compte connecté, synchronisation impossible pour le moment.',4000)}
+  if(!prof){const ps=(u.user_metadata&&u.user_metadata.pseudo)||('Joueur'+String(Math.floor(Math.random()*9000+1000)));
+    try{await ACC.sb.from('profiles').insert({id:u.id,pseudo:ps,save:{}})}catch(e){}prof={pseudo:ps,save:{}}}
+  ACC.pseudo=prof.pseudo||'';
+  const remote=prof.save&&typeof prof.save.k==='number'?prof.save:null;
+  if(SAVE.uid===u.id){                       // cet appareil suit déjà ce compte
+    if(remote&&(remote.ts||0)>(SAVE.ts||0))applyRemote(remote);else{accQueue()}
+  }else if(!remote){                         // compte neuf : il récupère la progression de l'appareil
+    SAVE.uid=u.id;saveLocal();ACC.dirty=true;accPush();
+  }else if(!SAVE.uid&&progScore(SAVE)>progScore(remote)+50){showAcct('choose',{remote});return}
+  else applyRemote(remote);
+  accRefreshUI();
+  if(!$('acctOv').hidden&&['login','signup','welcome','wait'].includes(ACC.view))showAcct('done');
+}
+async function accInit(){
+  if(!accOn()){accRefreshUI();return}
+  try{
+    if(!window.supabase)await loadScript(window.CC_SUPABASE_JS||'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js');
+    ACC.sb=window.supabase.createClient(window.CC_SUPABASE_URL,window.CC_SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    ACC.sb.auth.onAuthStateChange((ev,session)=>{
+      if(ev==='PASSWORD_RECOVERY'){setTimeout(()=>showAcct('newpass'),300)}
+      setTimeout(()=>accSession(session),0)});
+    const {data}=await ACC.sb.auth.getSession();await accSession(data&&data.session);
+    if(/access_token|type=recovery|type=signup/.test(location.hash))try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+  }catch(e){console.warn('comptes indisponibles',e)}
+  ACC.ready=true;accRefreshUI();
+  if(!ACC.user&&!SAVE.welcomed&&ACC.sb&&!/[?&]salon=/.test(location.search))showAcct('welcome');
+}
+function accRefreshUI(){
+  const c=$('hdrAcct');if(c){c.hidden=!accOn();c.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg><span>${ACC.user?escH(ACC.pseudo||'Mon compte'):'Se connecter'}</span>`;c.classList.toggle('in',!!ACC.user)}
+  try{if(!$('menu').hidden&&typeof renderMenu==='function')renderMenu()}catch(e){}
+  try{const v=$('vSettings');if(v&&!v.hidden)renderSettings($('mSet'))}catch(e){}
+}
+/* --- écrans --- */
+const AI={email:'<input id="aEmail" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="Email">',
+  pass:(nw)=>`<input id="aPass" type="password" autocomplete="${nw?'new-password':'current-password'}" placeholder="Mot de passe${nw?' (6 caractères min.)':''}">`,
+  pseudo:'<input id="aPseudo" maxlength="16" autocomplete="nickname" autocapitalize="off" spellcheck="false" placeholder="Pseudo (3 à 16 caractères)">'};
+function showAcct(view,opt){
+  ACC.view=view;opt=opt||{};const ov=$('acctOv'),box=$('acctBox');ov.hidden=false;
+  const back=`<button class="go alt" data-a="close">${ACC.user?'Fermer':'Plus tard'}</button>`;
+  const H={
+   welcome:`<h2>Bienvenue sur Klash Court</h2><p>Crée ton compte pour garder ta progression, tes KLASH et tes objets, même si tu changes de téléphone.</p>
+     <div class="pbtns"><button class="go big" data-a="signup">Créer un compte</button><button class="go alt" data-a="login">J'ai déjà un compte</button><button class="alink" data-a="guest">Jouer sans compte</button></div>`,
+   signup:`<span class="lbl">Nouveau compte</span><h2>Créer un compte</h2><div class="aform">${AI.pseudo}${AI.email}${AI.pass(1)}</div><p class="aerr" id="aErr"></p>
+     <div class="pbtns"><button class="go big" data-a="doSignup">Créer mon compte</button><button class="alink" data-a="login">J'ai déjà un compte</button><button class="alink" data-a="close">Annuler</button></div>`,
+   login:`<span class="lbl">Compte</span><h2>Se connecter</h2><div class="aform">${AI.email}${AI.pass(0)}</div><p class="aerr" id="aErr"></p>
+     <div class="pbtns"><button class="go big" data-a="doLogin">Se connecter</button><button class="alink" data-a="forgot">Mot de passe oublié ?</button><button class="alink" data-a="signup">Créer un compte</button><button class="alink" data-a="close">Annuler</button></div>`,
+   forgot:`<span class="lbl">Compte</span><h2>Mot de passe oublié</h2><p>Entre ton email : tu vas recevoir un lien pour choisir un nouveau mot de passe.</p><div class="aform">${AI.email}</div><p class="aerr" id="aErr"></p>
+     <div class="pbtns"><button class="go big" data-a="doForgot">Envoyer le lien</button><button class="alink" data-a="login">Retour</button></div>`,
+   newpass:`<span class="lbl">Compte</span><h2>Nouveau mot de passe</h2><div class="aform">${AI.pass(1)}</div><p class="aerr" id="aErr"></p>
+     <div class="pbtns"><button class="go big" data-a="doNewpass">Enregistrer</button></div>`,
+   wait:`<h2>Vérifie tes emails</h2><p>${escH(opt.msg||'')}</p><div class="pbtns"><button class="go big" data-a="login">Se connecter</button>${back}</div>`,
+   done:`<h2>Salut ${escH(ACC.pseudo)} !</h2><p>Ta progression est maintenant sauvegardée sur ton compte.</p><div class="pbtns"><button class="go big" data-a="close">C'est parti</button></div>`,
+   account:`<span class="lbl">Mon compte</span><h2>${escH(ACC.pseudo)}</h2><p class="amuted">${escH(ACC.email)}</p>
+     <p>Ta progression est sauvegardée automatiquement. Connecte-toi avec le même email sur un autre appareil pour la retrouver.</p>
+     <div class="pbtns"><button class="go alt" data-a="logout">Se déconnecter</button><button class="alink danger-t" data-a="delete">Supprimer mon compte</button>${back}</div>`,
+   choose:`<span class="lbl">Deux progressions trouvées</span><h2>Laquelle garder ?</h2>
+     <div class="achoose"><button class="go alt" data-a="keepRemote"><b>Celle du compte</b><small>${saveSummary(opt.remote)}</small></button><button class="go alt" data-a="keepLocal"><b>Celle de cet appareil</b><small>${saveSummary(SAVE)}</small></button></div>
+     <p class="amuted">L'autre sera remplacée.</p>`,
+   unavailable:`<h2>Comptes indisponibles</h2><p>${accOn()?'Connexion au service des comptes impossible. Vérifie ton réseau, puis recharge la page.':'Les comptes fonctionnent sur la version en ligne du jeu.'}</p><div class="pbtns">${back}</div>`
+  };
+  box.innerHTML=H[view]||'';
+  box.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>accAction(b.dataset.a,b,opt)));
+  box.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter'){const p=box.querySelector('.go.big');if(p)p.click()}}));
+  const f=box.querySelector('input');if(f&&matchMedia('(pointer:fine)').matches)setTimeout(()=>f.focus(),50);
+}
+function saveSummary(s){if(!s)return '';let best=1;for(const k in (s.lv||{}))best=Math.max(best,s.lv[k].lv||1);return `${(s.k||0).toLocaleString('fr-FR')} KLASH · niveau max ${best} · ${(s.owned||[]).length} objets`}
+const aval=id=>{const e=$(id);return e?e.value.trim():''};
+function aErr(m){const e=$('aErr');if(e)e.textContent=m||''}
+async function aBusy(btn,fn){if(btn.disabled)return;const t=btn.textContent;btn.disabled=true;btn.textContent='…';aErr('');try{await fn()}catch(e){aErr(accErr(e))}finally{if(btn.isConnected){btn.disabled=false;btn.textContent=t}}}
+function closeAcct(){$('acctOv').hidden=true;ACC.view=null}
+async function accAction(a,btn,opt){
+  sfx.blip&&sfx.blip();const sb=ACC.sb;
+  switch(a){
+    case 'close':closeAcct();break;
+    case 'guest':SAVE.welcomed=1;saveLocal();closeAcct();break;
+    case 'signup':case 'login':case 'forgot':if(!sb){showAcct('unavailable');break}showAcct(a);break;
+    case 'doSignup':await aBusy(btn,async()=>{
+      const ps=aval('aPseudo'),em=aval('aEmail'),pw=$('aPass').value;
+      if(!PSEUDO_RE.test(ps))throw new Error('Pseudo : 3 à 16 caractères (lettres, chiffres, _ - .).');
+      if(!/^\S+@\S+\.\S+$/.test(em))throw new Error('Adresse email invalide.');
+      if(pw.length<6)throw new Error('Mot de passe : 6 caractères minimum.');
+      const fr=await sb.rpc('pseudo_free',{p:ps});if(fr.error)throw fr.error;if(fr.data===false)throw new Error('Ce pseudo est déjà pris.');
+      const {data,error}=await sb.auth.signUp({email:em,password:pw,options:{data:{pseudo:ps},emailRedirectTo:accRedirect()}});
+      if(error)throw error;SAVE.welcomed=1;saveLocal();
+      if(!data.session)showAcct('wait',{msg:`Un email de confirmation a été envoyé à ${em}. Clique sur le lien, puis reviens te connecter.`});
+    });break;
+    case 'doLogin':await aBusy(btn,async()=>{
+      const em=aval('aEmail'),pw=$('aPass').value;if(!em||!pw)throw new Error('Entre ton email et ton mot de passe.');
+      const {error}=await sb.auth.signInWithPassword({email:em,password:pw});if(error)throw error;SAVE.welcomed=1;saveLocal()});break;
+    case 'doForgot':await aBusy(btn,async()=>{
+      const em=aval('aEmail');if(!/^\S+@\S+\.\S+$/.test(em))throw new Error('Adresse email invalide.');
+      const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:accRedirect()});if(error)throw error;
+      showAcct('wait',{msg:`Si un compte existe pour ${em}, un lien pour changer ton mot de passe vient d'être envoyé.`})});break;
+    case 'doNewpass':await aBusy(btn,async()=>{
+      const pw=$('aPass').value;if(pw.length<6)throw new Error('Mot de passe : 6 caractères minimum.');
+      const {error}=await sb.auth.updateUser({password:pw});if(error)throw error;toast('Mot de passe modifié',2500);closeAcct()});break;
+    case 'logout':if(btn.dataset.armed!=='1'){btn.dataset.armed='1';btn.textContent='Confirmer la déconnexion';break}
+      if(ACC.dirty)await accPush();try{await sb.auth.signOut()}catch(e){}
+      LEAVING=true;try{localStorage.removeItem('cc_save');localStorage.removeItem('cc_best');const s=JSON.stringify({set:SAVE.set,welcomed:1,k:500});localStorage.setItem('cc_save',s)}catch(e){}
+      location.reload();break;
+    case 'delete':if(btn.dataset.armed!=='1'){btn.dataset.armed='1';btn.textContent='Confirmer : tout supprimer définitivement';break}
+      await aBusy(btn,async()=>{const {error}=await sb.rpc('delete_me');if(error)throw error;try{await sb.auth.signOut()}catch(e){}
+        LEAVING=true;try{localStorage.removeItem('cc_save');localStorage.removeItem('cc_best')}catch(e){}location.reload()});break;
+    case 'keepRemote':applyRemote(opt.remote);showAcct('done');break;
+    case 'keepLocal':SAVE.uid=ACC.uid;saveLocal();ACC.dirty=true;await accPush();showAcct('done');break;
+  }
+}
+
+$('hdrAcct').addEventListener('click',()=>{ensureAudio();if(!accOn()){showAcct('unavailable');return}showAcct(ACC.user?'account':(ACC.sb?'welcome':'unavailable'))});
+setTimeout(accInit,1700);
 // boot splash
 {const q=/[?&]salon=([A-Za-z]{4})/.exec(location.search);if(q&&/^https?:$/.test(location.protocol)){const code=q[1].toUpperCase();try{history.replaceState(null,'',location.pathname)}catch(e){}
   setTimeout(()=>{try{ensureAudio()}catch(e){}$('menu').hidden=true;showLobby();const ci=$('codeIn');if(ci){ci.value=code;$('pJoin').click()}},900)}}

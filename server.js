@@ -14,6 +14,13 @@ const server = http.createServer((req, res) => {
   let url;
   try { url = decodeURIComponent((req.url || '/').split('?')[0]); } catch (e) { res.writeHead(400); res.end(); return; }
   if (url === '/health') { res.writeHead(200); res.end('ok'); return; }
+  // Réglages publics des comptes joueurs (Supabase) : renseignés dans les variables d'environnement du serveur
+  if (url === '/config.js') {
+    const cfg = { CC_SUPABASE_URL: process.env.SUPABASE_URL || '', CC_SUPABASE_KEY: process.env.SUPABASE_ANON_KEY || '', CC_PRIVACY: process.env.PRIVACY_URL || '/privacy.html' };
+    res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff' });
+    res.end(Object.entries(cfg).map(([k, v]) => `window.${k}=window.${k}||${JSON.stringify(v)};`).join('\n'));
+    return;
+  }
   let file = path.normalize(path.join(PUBLIC, url === '/' ? 'index.html' : url));
   if (!file.startsWith(PUBLIC)) { res.writeHead(403); res.end(); return; }
   fs.readFile(file, (err, data) => {
